@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "631171805724",
+    "firebase_url": "https://otkd-8ca7d.firebaseio.com",
+    "project_id": "otkd-8ca7d",
+    "storage_bucket": "otkd-8ca7d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631171805724:android:9d3a63216491d6a4",
+        "android_client_info": {
+          "package_name": "eu.nanooq.otkd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "631171805724-86f22jgjra7p5c021lnndnncklla0gqc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLVjOrKYZXkaAQSTgs6Q25bw8MIqXkehQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
