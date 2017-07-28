@@ -3,12 +3,12 @@ package eu.nanooq.otkd.di.modules
 import dagger.Module
 import dagger.Provides
 import eu.nanooq.otkd.apiService.IOtkdService
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.Retrofit
 import okhttp3.OkHttpClient
-import rx.schedulers.Schedulers
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import javax.inject.Named
 import java.util.concurrent.TimeUnit
 
@@ -33,7 +33,7 @@ class RetrofitModule {
     fun provideOtkdServiceWithMoshi(
             @Named(RETROFIT_MOSHI_NORMAL_TIMEOUT) retrofit: Retrofit
     ): IOtkdService {
-        return retrofit.create<IOtkdService>(IOtkdService::class.java!!)
+        return retrofit.create<IOtkdService>(IOtkdService::class.java)
     }
     @Provides
     @Named(RETROFIT_MOSHI_NORMAL_TIMEOUT)
@@ -59,7 +59,7 @@ class RetrofitModule {
         return Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
     }
@@ -79,9 +79,9 @@ class RetrofitModule {
     private fun createClient(timeout: Long): OkHttpClient {
 
         return OkHttpClient.Builder()
-                .connectTimeout(timeout, TimeUnit.MILLISECONDS)
-                .readTimeout(timeout, TimeUnit.MILLISECONDS)
-                .writeTimeout(timeout, TimeUnit.MILLISECONDS)
+//                .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+//                .readTimeout(timeout, TimeUnit.MILLISECONDS)
+//                .writeTimeout(timeout, TimeUnit.MILLISECONDS)
                 .build()
     }
 }

@@ -13,9 +13,9 @@ import timber.log.Timber
 
 /**
  *
- * Created by rd on 28/07/2017.
+ * Created by rd on 23/07/2017.
  */
-class SomeFragment : ViewModelFragment<ISectionsView, SectionsViewModel>() , ISectionsView {
+class SectionsFragment : ViewModelFragment<ISectionsView,SectionsViewModel>() , ISectionsView {
 
     companion object {
         fun newInstance(): SectionsFragment {

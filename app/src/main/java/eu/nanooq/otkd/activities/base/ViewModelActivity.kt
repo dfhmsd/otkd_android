@@ -6,7 +6,7 @@ import eu.inloop.viewmodel.AbstractViewModel
 import eu.inloop.viewmodel.IView
 import eu.inloop.viewmodel.base.ViewModelBaseActivity
 import eu.nanooq.otkd.App
-import eu.nanooq.otkd.viewModels.base.ActivityViewModel
+import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import timber.log.Timber
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
@@ -23,7 +23,7 @@ abstract class ViewModelActivity<T : IView, R : AbstractViewModel<T>> : ViewMode
 
         setModelView(this as T)
 
-        App.component.inject(this as ViewModelActivity<IView, ActivityViewModel<IView>>)
+        App.component.inject(this as ViewModelActivity<IView, BaseViewModel<IView>>)
     }
 
     override fun attachBaseContext(newBase: Context?) {

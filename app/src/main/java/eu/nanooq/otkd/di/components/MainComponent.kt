@@ -9,7 +9,8 @@ import eu.nanooq.otkd.di.IDependency
 import eu.nanooq.otkd.di.modules.AppModule
 import eu.nanooq.otkd.di.modules.FirebaseModule
 import eu.nanooq.otkd.di.modules.RetrofitModule
-import eu.nanooq.otkd.viewModels.base.ActivityViewModel
+import eu.nanooq.otkd.fragments.base.ViewModelFragment
+import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import javax.inject.Singleton
 import eu.nanooq.otkd.helpers.FirebaseHelper
 
@@ -24,10 +25,11 @@ import eu.nanooq.otkd.helpers.FirebaseHelper
 @Component(modules = arrayOf(AppModule::class, FirebaseModule::class, RetrofitModule::class))
 interface MainComponent {
     fun inject(app: Application)
-    fun inject(activityViewModel: ActivityViewModel<IView>)
+    fun inject(baseViewModel: BaseViewModel<IView>)
     fun inject(firebaseHelper: FirebaseHelper)
     fun inject(apiProvider: ApiProvider)
-    fun inject(viewModelActivity: ViewModelActivity<IView, ActivityViewModel<IView>>)
+    fun inject(viewModelActivity: ViewModelActivity<IView, BaseViewModel<IView>>)
+    fun inject(viewModelFragment: ViewModelFragment<IView, BaseViewModel<IView>>)
     fun inject(dependency: IDependency)
 
 

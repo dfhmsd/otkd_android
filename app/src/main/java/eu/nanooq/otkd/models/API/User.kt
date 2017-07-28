@@ -7,7 +7,7 @@ package eu.nanooq.otkd.models.API
  */
 data class UserCaptain(
         var email: String = "",
-        var password: String = ""
+        var token: String = ""
 )
 data class UserRunner(
         var email: String = "",

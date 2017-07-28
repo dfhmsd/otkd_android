@@ -3,12 +3,13 @@ package eu.nanooq.otkd.viewModels
 import android.os.Bundle
 import android.util.Base64
 import com.androidhuman.rxfirebase2.database.data
-import eu.nanooq.otkd.viewModels.base.ActivityViewModel
+import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import timber.log.Timber
 import java.nio.charset.Charset
 import eu.nanooq.otkd.models.API.UserRunner
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit
  *
  * Created by rd on 23/07/2017.
  */
-class LoginViewModel : ActivityViewModel<ILoginView>() {
+class LoginViewModel : BaseViewModel<ILoginView>() {
 
 
     lateinit var mSub: Disposable
@@ -67,18 +68,7 @@ class LoginViewModel : ActivityViewModel<ILoginView>() {
 
     }
 
-    private fun loginCaptain(captainName: String, captainPassword: String) {
 
-        mApiProvider.loginCaptain(captainName, captainPassword)
-    }
-
-    private fun showError(msg: String) {
-        view?.showError(msg)
-    }
-
-    private fun String?.isFieldValid(): Boolean {
-        return (this != null && this.isNotBlank())
-    }
 
     fun onRunnerLoginClick(runnerFirstName: String, runnerSurname: String, runnerTeam: String) {
         Timber.d("onRunnerLoginClick() $runnerFirstName , $runnerSurname, $runnerTeam")
@@ -89,6 +79,33 @@ class LoginViewModel : ActivityViewModel<ILoginView>() {
         } else {
             showError("Invalid fields")
         }
+    }
+
+    private fun loginCaptain(captainName: String, captainPassword: String) {
+
+        mApiProvider
+                .loginCaptain(captainName, captainPassword)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe {
+                    Timber.d("doOnSubscribe() ${Thread.currentThread().name}")
+                    view?.showProgressBar()
+
+                }
+                .doFinally {
+                    Timber.d("doFinaly() ${Thread.currentThread().name}")
+                    view?.dismissProgressBar()
+
+                }
+                .subscribe ({
+                    Timber.d("onNext() $it  ${Thread.currentThread().name}")
+                    view?.onUserLogedIn(it)
+
+                },{
+                    Timber.e("onError $it ${Thread.currentThread().name}")
+                        view?.showError(it.message?: "Could not sign in")
+                })
+
     }
 
     private fun loginRunner(runnerFirstName: String, runnerSurname: String, runnerTeam: String) {
@@ -113,18 +130,26 @@ class LoginViewModel : ActivityViewModel<ILoginView>() {
                 }
                 .doFinally {
                     Timber.e("doFinally")
-                    view?.hideProgressBar()
+                    view?.dismissProgressBar()
                 }
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     //onSuccess
                     Timber.d("onSuccess $it")
                     user = it.getValue(UserRunner::class.java)
+                    user?.let { view?.onUserLogedIn(it) }
                 }, {
                     //onError
                     Timber.e("onError ${it.message} ")
                 })
     }
 
+    private fun showError(msg: String) {
+        view?.showError(msg)
+    }
+
+    private fun String?.isFieldValid(): Boolean {
+        return (this != null && this.isNotBlank())
+    }
 
 }

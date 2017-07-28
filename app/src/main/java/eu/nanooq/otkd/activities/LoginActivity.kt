@@ -6,9 +6,10 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.Toolbar
 import android.text.InputType
 import android.view.View
-import android.widget.TextView
 import eu.nanooq.otkd.R
 import eu.nanooq.otkd.activities.base.ViewModelActivity
+import eu.nanooq.otkd.models.API.UserCaptain
+import eu.nanooq.otkd.models.API.UserRunner
 import eu.nanooq.otkd.s
 import eu.nanooq.otkd.viewModels.ILoginView
 import eu.nanooq.otkd.viewModels.LoginViewModel
@@ -72,7 +73,7 @@ class LoginActivity : ViewModelActivity<ILoginView, LoginViewModel>(), ILoginVie
 
     override fun onDestroy() {
         Timber.d("onDestroy()")
-        hideProgressBar()
+        dismissProgressBar()
 
         super.onDestroy()
     }
@@ -101,7 +102,14 @@ class LoginActivity : ViewModelActivity<ILoginView, LoginViewModel>(), ILoginVie
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
-    override fun onUserLogedIn() {
+    override fun onUserLogedIn(captain: UserCaptain) {
+        Timber.d("onUserLogedIn()")
+
+
+
+    }
+
+    override fun onUserLogedIn(runner: UserRunner) {
         Timber.d("onUserLogedIn()")
 
 
@@ -145,8 +153,8 @@ class LoginActivity : ViewModelActivity<ILoginView, LoginViewModel>(), ILoginVie
 
     }
 
-    override fun hideProgressBar() {
-        Timber.d("hideProgressBar() ${Thread.currentThread().name}")
+    override fun dismissProgressBar() {
+        Timber.d("dismissProgressBar() ${Thread.currentThread().name}")
 
         mProgressDialog?.dismiss()
 //        mProgressDialog = null

@@ -32,12 +32,13 @@ class FirebaseHelper : IDependency {
 
             override fun destroy() {
 
+
             }
         }
         dep.init()
         App.component.inject(this)
 
-        FirebaseApp.initializeApp(mContext)
+        val fireApp = FirebaseApp.initializeApp(mContext)
 
         mFBDBReference = FirebaseDatabase.getInstance()
                 .reference

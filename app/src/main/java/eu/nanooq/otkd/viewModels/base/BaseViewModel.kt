@@ -13,7 +13,7 @@ import javax.inject.Inject
  *
  * Created by rd on 26/07/2017.
  */
-abstract class ActivityViewModel<T: IView> : AbstractViewModel<T>() {
+abstract class BaseViewModel<T: IView> : AbstractViewModel<T>() {
 
 
     @Inject
@@ -26,7 +26,7 @@ abstract class ActivityViewModel<T: IView> : AbstractViewModel<T>() {
         Timber.d("onCreate")
         super.onCreate(arguments, savedInstanceState)
 
-        App.component.inject(this as ActivityViewModel<IView>)
+        App.component.inject(this as BaseViewModel<IView>)
 
 
     }

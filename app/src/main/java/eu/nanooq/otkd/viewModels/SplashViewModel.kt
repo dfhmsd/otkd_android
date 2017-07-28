@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import eu.nanooq.otkd.activities.LoginActivity
-import eu.nanooq.otkd.viewModels.base.ActivityViewModel
+import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import timber.log.Timber
 
 /**
  *
  * Created by rd on 27/07/2017.
  */
-class SplashViewModel : ActivityViewModel<ISplashView>() {
+class SplashViewModel : BaseViewModel<ISplashView>() {
 
     companion object {
         const val CAPTAIN = "captain"
