@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:id="@+id/activity_login"
+    tools:context="eu.nanooq.otkd.activities.LoginActivity"
+    >
+
+    <include
+        android:id="@+id/mToolbar"
+        layout="@layout/layout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/slogan"
+        fontPath="@string/opensans_extrabold_font_path"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mToolbar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="26sp"
+        tools:text="@string/label_captain_title"
+
+        />
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/mLoginArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slogan"
+        >
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/vUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.EditText.Login"
+            android:drawableStart="@drawable/ic_user"
+            android:inputType="textEmailAddress"
+            />
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/vPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.EditText.Login"
+            android:layout_below="@+id/vUserName"
+            android:drawableStart="@drawable/ic_password"
+            android:inputType="textPassword"
+            />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/vTeamName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.EditText.Login"
+            android:layout_below="@+id/vPassword"
+            android:drawableStart="@drawable/ic_password"
+            android:inputType="textPersonName"
+            android:visibility="invisible"
+            />
+
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <TextView
+        android:id="@+id/legal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mLoginArea"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="@string/label_captain_terms"
+        android:textColor="@color/secondaryTextColor"
+        android:windowSoftInputMode="adjustResize"
+        />
+
+    <Button
+        android:id="@+id/mLoginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/legal"
+        android:layout_margin="16dp"
+        android:background="@drawable/background_btn_accent"
+        android:text="@string/label_captain_login"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:windowSoftInputMode="adjustResize"
+        />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/bg_bottom_login"
+        android:tint="@color/secondaryTextColor"
+        />
+
+</android.support.percent.PercentRelativeLayout>
