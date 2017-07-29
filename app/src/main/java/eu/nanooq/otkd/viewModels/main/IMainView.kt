@@ -1,4 +1,4 @@
-package eu.nanooq.otkd.viewModels
+package eu.nanooq.otkd.viewModels.main
 
 import eu.inloop.viewmodel.IView
 

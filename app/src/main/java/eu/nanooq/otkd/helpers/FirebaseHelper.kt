@@ -15,30 +15,24 @@ import javax.inject.Singleton
  * Created by rd on 26/07/2017.
  */
 @Singleton
-class FirebaseHelper : IDependency {
+class FirebaseHelper @Inject constructor(private var mContext: Context) : IDependency {
 
     lateinit var mFBDBReference: DatabaseReference
 
-    @Inject
-    lateinit var mContext: Context
+
+    companion object {
+        const val SECTIONS = "sections"
+        const val TEAM_MEMBERS = "team_members"
+        const val MEMBERS = "members"
+        const val USER_DATA = "user_data"
+        const val RESULTS = "results"
+        const val LOGIN_RUNNER = "login_runner_"
+    }
 
     override fun init() {
-        super.init()
-        val dep = object : IDependency {
-            override fun init() {
-                super.init()
-                Timber.d("initFire")
-            }
-
-            override fun destroy() {
-
-
-            }
-        }
-        dep.init()
         App.component.inject(this)
 
-        val fireApp = FirebaseApp.initializeApp(mContext)
+        FirebaseApp.initializeApp(mContext)
 
         mFBDBReference = FirebaseDatabase.getInstance()
                 .reference

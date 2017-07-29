@@ -1,9 +1,6 @@
-package eu.nanooq.otkd.viewModels
+package eu.nanooq.otkd.viewModels.splash
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import eu.nanooq.otkd.activities.LoginActivity
 import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import timber.log.Timber
 
@@ -20,21 +17,24 @@ class SplashViewModel : BaseViewModel<ISplashView>() {
     override fun onCreate(arguments: Bundle?, savedInstanceState: Bundle?) {
         Timber.d("onCreate()")
         super.onCreate(arguments, savedInstanceState)
+
     }
 
-    fun onLoginCaptainClick(context: Context) {
+    fun onLoginCaptainClick() {
         Timber.d("onLoginCaptainClick()")
-
-        val intent = Intent(context , LoginActivity::class.java )
-        intent.putExtra(CAPTAIN , true)
-        context.startActivity(intent)
+        view?.startLoginActivity(true)
     }
 
-    fun onLoginRunnerClick(context: Context) {
+    fun onLoginRunnerClick() {
         Timber.d("onLoginRunnerClick()")
 
-        val intent = Intent(context , LoginActivity::class.java )
-        intent.putExtra(CAPTAIN , false)
-        context.startActivity(intent)
+        view?.startLoginActivity(false)
+    }
+
+    fun checkIfUserIsAlreadyLogged() {
+
+        val user = mPreferencesHelper.getUser()
+        Timber.d("onLoginRunnerClick() $user")
+        user?.run { view?.autoSignInUser(user) }
     }
 }

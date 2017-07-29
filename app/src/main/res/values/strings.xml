@@ -26,4 +26,9 @@
     <string name="email_hint">username</string>
     <string name="password_hint">password</string>
     <string name="signing_in">Prihlasuji..</string>
+    <string name="bottom_menu_sections">Úseky</string>
+    <string name="bottom_menu_team">Tím</string>
+    <string name="bottom_menu_chat">Chat</string>
+    <string name="bottom_menu_results">Výsledky</string>
+    <string name="bottom_menu_profile">Profil</string>
 </resources>

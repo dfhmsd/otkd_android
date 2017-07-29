@@ -2,6 +2,36 @@
 <android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimaryDark"
+    >
+    <include
+        android:id="@+id/mToolbar"
+        layout="@layout/layout_toolbar"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        />
+
+    <FrameLayout
+        android:id="@+id/vMainContent"
+        android:layout_below="@+id/mToolbar"
+        android:layout_above="@+id/vMainNavigation"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        />
+
+    <com.roughike.bottombar.BottomBar
+        android:id="@+id/vMainNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        app:bb_tabXmlResource="@xml/main_navi_items"
+        app:bb_activeTabColor="@android:color/white"
+        app:bb_inActiveTabColor="@color/colorPrimary"
+        app:bb_titleTextAppearance="@style/BB_BottomBarItem_TitleStyle.NoText"
+        />
+
 
 </android.support.percent.PercentRelativeLayout>

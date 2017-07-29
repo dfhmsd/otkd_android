@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix"
+
+    >
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="@dimen/round_corners_radius"
+        >
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            >
+
+            <android.support.percent.PercentRelativeLayout
+                android:id="@+id/vLeftContainer"
+                app:layout_widthPercent="60%"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:id="@+id/vSectionId"
+                    fontPath="@string/opensans_semibold_font_path"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    tools:text="Usek 1"
+
+                    />
+
+                <TextView
+                    android:id="@+id/vSectionName"
+                    fontPath="@string/opensans_semibold_font_path"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vSectionId"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    tools:text="Usek 1"
+                    />
+
+                <TextView
+                    android:id="@+id/vSectionDifficulty"
+                    style="@style/TextView.ItemSection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vSectionName"
+                    tools:text="ablsdwblab"
+                    />
+
+                <TextView
+                    android:id="@+id/vSectionLength"
+                    style="@style/TextView.ItemSection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vSectionDifficulty"
+                    tools:text="ablsdwblab"
+                    />
+
+                <TextView
+                    android:id="@+id/vSectionCrossFall"
+                    style="@style/TextView.ItemSection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vSectionLength"
+                    tools:text="ablsdwblab"
+                    />
+            </android.support.percent.PercentRelativeLayout>
+
+            <android.support.percent.PercentRelativeLayout
+                android:id="@+id/vRightContainer"
+                app:layout_widthPercent="40%"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/vLeftContainer"
+                >
+                <ImageView
+                    android:id="@+id/vSectionRunnerImage"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentEnd="true"
+                    />
+                <TextView
+                    android:id="@+id/vSectionRunnerName"
+                    style="@style/TextView.ItemSection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vSectionRunnerImage"
+                    android:layout_alignParentEnd="true"
+                    tools:text="ablsdwblab"
+                    />
+            </android.support.percent.PercentRelativeLayout>
+
+        </android.support.percent.PercentRelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

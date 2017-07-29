@@ -11,9 +11,6 @@ import javax.inject.Inject
  */
 interface IDependency {
 
-    fun init() {
-        Timber.d("initIDepen")
-    }
-
+    fun init()
     fun destroy()
 }

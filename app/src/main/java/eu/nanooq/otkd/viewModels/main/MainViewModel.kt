@@ -1,4 +1,4 @@
-package eu.nanooq.otkd.viewModels
+package eu.nanooq.otkd.viewModels.main
 
 import android.os.Bundle
 import eu.nanooq.otkd.viewModels.base.BaseViewModel

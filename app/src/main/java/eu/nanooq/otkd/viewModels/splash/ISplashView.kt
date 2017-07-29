@@ -1,7 +1,7 @@
-package eu.nanooq.otkd.viewModels
+package eu.nanooq.otkd.viewModels.splash
 
-import android.content.Context
 import eu.inloop.viewmodel.IView
+import eu.nanooq.otkd.models.API.User
 
 /**
  *
@@ -11,4 +11,6 @@ interface ISplashView : IView {
     fun onLoginCaptainClick()
 
     fun onLoginRunnerClick()
+    fun  autoSignInUser(user: User)
+    fun  startLoginActivity(captain: Boolean)
 }

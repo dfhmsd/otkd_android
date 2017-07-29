@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import eu.nanooq.otkd.helpers.PreferencesHelper
 import javax.inject.Singleton
 
 
@@ -24,5 +25,13 @@ class AppModule(private val mApp: Application) {
     @Singleton
     fun provideContext(): Context {
         return mApp.applicationContext
+    }
+
+    @Provides
+    @Singleton
+    fun providePreferencesHelper() : PreferencesHelper {
+        val helper = PreferencesHelper(mApp.applicationContext)
+        helper.init()
+        return helper
     }
 }

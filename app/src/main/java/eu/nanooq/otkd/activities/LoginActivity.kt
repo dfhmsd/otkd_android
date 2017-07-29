@@ -1,18 +1,20 @@
 package eu.nanooq.otkd.activities
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.Toolbar
 import android.text.InputType
 import android.view.View
+import android.widget.TextView
 import eu.nanooq.otkd.R
 import eu.nanooq.otkd.activities.base.ViewModelActivity
 import eu.nanooq.otkd.models.API.UserCaptain
 import eu.nanooq.otkd.models.API.UserRunner
 import eu.nanooq.otkd.s
-import eu.nanooq.otkd.viewModels.ILoginView
-import eu.nanooq.otkd.viewModels.LoginViewModel
+import eu.nanooq.otkd.viewModels.login.ILoginView
+import eu.nanooq.otkd.viewModels.login.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 import timber.log.Timber
 
@@ -105,14 +107,13 @@ class LoginActivity : ViewModelActivity<ILoginView, LoginViewModel>(), ILoginVie
     override fun onUserLogedIn(captain: UserCaptain) {
         Timber.d("onUserLogedIn()")
 
-
-
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     override fun onUserLogedIn(runner: UserRunner) {
         Timber.d("onUserLogedIn()")
 
-
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     override fun finishLoginActivity() {
@@ -181,8 +182,8 @@ class LoginActivity : ViewModelActivity<ILoginView, LoginViewModel>(), ILoginVie
         vTeamName.hint = getString(R.string.label_runner_team_name)
 
         //set test runner
-//        vUserName.setText("Barbora", TextView.BufferType.EDITABLE)
-//        vPassword.setText("Rakacká", TextView.BufferType.EDITABLE)
-//        vTeamName.setText("IT Girls", TextView.BufferType.EDITABLE)
+        vUserName.setText("Barbora", TextView.BufferType.EDITABLE)
+        vPassword.setText("Rakacká", TextView.BufferType.EDITABLE)
+        vTeamName.setText("IT Girls", TextView.BufferType.EDITABLE)
     }
 }

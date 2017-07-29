@@ -6,6 +6,7 @@ import eu.inloop.viewmodel.IView
 import eu.nanooq.otkd.App
 import eu.nanooq.otkd.apiService.ApiProvider
 import eu.nanooq.otkd.helpers.FirebaseHelper
+import eu.nanooq.otkd.helpers.PreferencesHelper
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,14 +21,17 @@ abstract class BaseViewModel<T: IView> : AbstractViewModel<T>() {
     lateinit var mFirebaseHelper : FirebaseHelper
 
     @Inject
+    lateinit var mPreferencesHelper: PreferencesHelper
+
+    @Inject
     lateinit var mApiProvider: ApiProvider
+
 
     override fun onCreate(arguments: Bundle?, savedInstanceState: Bundle?) {
         Timber.d("onCreate")
         super.onCreate(arguments, savedInstanceState)
 
         App.component.inject(this as BaseViewModel<IView>)
-
 
     }
 }

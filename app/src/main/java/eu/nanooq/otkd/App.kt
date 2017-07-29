@@ -44,7 +44,7 @@ class App : Application() {
         component = DaggerMainComponent
                 .builder()
                 .appModule(AppModule(this))
-                .firebaseModule(FirebaseModule())
+                .firebaseModule(FirebaseModule(this))
                 .retrofitModule(RetrofitModule())
                 .build()
     }

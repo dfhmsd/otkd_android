@@ -1,4 +1,4 @@
-package eu.nanooq.otkd.viewModels
+package eu.nanooq.otkd.viewModels.login
 
 import eu.inloop.viewmodel.IView
 import eu.nanooq.otkd.models.API.UserCaptain

@@ -13,7 +13,7 @@ import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import javax.inject.Singleton
 import eu.nanooq.otkd.helpers.FirebaseHelper
-
+import eu.nanooq.otkd.helpers.PreferencesHelper
 
 
 /**
@@ -27,6 +27,7 @@ interface MainComponent {
     fun inject(app: Application)
     fun inject(baseViewModel: BaseViewModel<IView>)
     fun inject(firebaseHelper: FirebaseHelper)
+    fun inject(preferencesHelper: PreferencesHelper)
     fun inject(apiProvider: ApiProvider)
     fun inject(viewModelActivity: ViewModelActivity<IView, BaseViewModel<IView>>)
     fun inject(viewModelFragment: ViewModelFragment<IView, BaseViewModel<IView>>)

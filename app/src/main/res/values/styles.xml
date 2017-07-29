@@ -39,4 +39,16 @@
         <item name="android:textColorHint">@color/secondaryTextColor</item>
     </style>
 
+    <style name="BB_BottomBarItem_TitleStyle.NoText" parent="BB_BottomBarItem_TitleStyle">
+        <item name="android:textSize">2sp</item>
+    </style>
+
+    <style name="TextView.ItemSection" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="fontPath">@string/opensans_font_path</item>
+    </style>
+
 </resources>

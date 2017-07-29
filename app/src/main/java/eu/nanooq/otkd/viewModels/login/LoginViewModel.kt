@@ -1,12 +1,14 @@
-package eu.nanooq.otkd.viewModels
+package eu.nanooq.otkd.viewModels.login
 
 import android.os.Bundle
 import android.util.Base64
 import com.androidhuman.rxfirebase2.database.data
+import eu.nanooq.otkd.models.API.UserCaptain
 import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import timber.log.Timber
 import java.nio.charset.Charset
 import eu.nanooq.otkd.models.API.UserRunner
+import eu.nanooq.otkd.viewModels.splash.SplashViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -90,22 +92,19 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
                 .doOnSubscribe {
                     Timber.d("doOnSubscribe() ${Thread.currentThread().name}")
                     view?.showProgressBar()
-
                 }
                 .doFinally {
                     Timber.d("doFinaly() ${Thread.currentThread().name}")
                     view?.dismissProgressBar()
-
                 }
                 .subscribe ({
                     Timber.d("onNext() $it  ${Thread.currentThread().name}")
+                    saveUser(it)
                     view?.onUserLogedIn(it)
-
                 },{
                     Timber.e("onError $it ${Thread.currentThread().name}")
                         view?.showError(it.message?: "Could not sign in")
                 })
-
     }
 
     private fun loginRunner(runnerFirstName: String, runnerSurname: String, runnerTeam: String) {
@@ -114,8 +113,6 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
         val login = "$runnerTeam $runnerFirstName $runnerSurname".toByteArray(Charset.forName("UTF-8"))
         val baseLogin = Base64.encodeToString(login, Base64.NO_WRAP)
         var user: UserRunner? = null
-
-
 
         mSub = mFirebaseHelper
                 .mFBDBReference
@@ -137,16 +134,21 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
                     //onSuccess
                     Timber.d("onSuccess $it")
                     user = it.getValue(UserRunner::class.java)
-                    user?.let { view?.onUserLogedIn(it) }
+
+                    user?.let {
+                        saveUser(it)
+                        view?.onUserLogedIn(it)
+                    }
                 }, {
                     //onError
                     Timber.e("onError ${it.message} ")
                 })
     }
 
-    private fun showError(msg: String) {
-        view?.showError(msg)
-    }
+    private fun saveUser(runner: UserRunner) { mPreferencesHelper.saveUser(runner) }
+    private fun saveUser(captain: UserCaptain) { mPreferencesHelper.saveUser(captain) }
+
+    private fun showError(msg: String) { view?.showError(msg) }
 
     private fun String?.isFieldValid(): Boolean {
         return (this != null && this.isNotBlank())
