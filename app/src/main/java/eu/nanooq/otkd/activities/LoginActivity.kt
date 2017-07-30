@@ -181,9 +181,9 @@ class LoginActivity : ViewModelActivity<ILoginView, LoginViewModel>(), ILoginVie
         vTeamName.visibility = View.VISIBLE
         vTeamName.hint = getString(R.string.label_runner_team_name)
 
-        //set test runner
-        vUserName.setText("Barbora", TextView.BufferType.EDITABLE)
-        vPassword.setText("Rakacká", TextView.BufferType.EDITABLE)
-        vTeamName.setText("IT Girls", TextView.BufferType.EDITABLE)
+        //set test runner TODO delete
+        vUserName.setText("Rudolf", TextView.BufferType.EDITABLE)
+        vPassword.setText("Hladík", TextView.BufferType.EDITABLE)
+        vTeamName.setText("Povieme to behom", TextView.BufferType.EDITABLE)
     }
 }

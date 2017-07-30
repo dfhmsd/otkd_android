@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
-    android:background="@color/secondaryAccent"
     >
+
+    <TextView
+        android:id="@+id/vUserSectionsCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/secondaryTextColor"
+        tools:text="26 useku"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vUserSectionsRecView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>

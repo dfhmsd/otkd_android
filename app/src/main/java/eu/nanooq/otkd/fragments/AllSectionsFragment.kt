@@ -44,19 +44,17 @@ class AllSectionsFragment : ViewModelFragment<IAllSectionsView, AllSectionsViewM
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         Timber.d("onViewCreated()")
+        super.onViewCreated(view, savedInstanceState)
 
         mAdapter.hasStableIds()
         vAllSectionsRecView.adapter = mAdapter
         vAllSectionsRecView.layoutManager = LinearLayoutManager(context)
         vAllSectionsRecView.hasFixedSize()
-
-        super.onViewCreated(view, savedInstanceState)
-
-
     }
 
     override fun updateAdapter(newItems: ArrayList<SectionItem>) {
         Timber.d("updateAdapter() $newItems")
+        vSectionsCount.text = newItems.size.toString()
 
         mAdapter.addItems(newItems)
     }
