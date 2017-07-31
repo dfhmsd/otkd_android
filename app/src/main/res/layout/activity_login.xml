@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    android:id="@+id/activity_login"
     tools:context="eu.nanooq.otkd.activities.LoginActivity"
     >
 
@@ -41,9 +40,9 @@
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/vUserName"
+            style="@style/Widget.AppCompat.EditText.Login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.EditText.Login"
             android:drawableStart="@drawable/ic_user"
             android:inputType="textEmailAddress"
             />
@@ -51,9 +50,9 @@
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/vPassword"
+            style="@style/Widget.AppCompat.EditText.Login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.EditText.Login"
             android:layout_below="@+id/vUserName"
             android:drawableStart="@drawable/ic_password"
             android:inputType="textPassword"
@@ -61,9 +60,9 @@
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/vTeamName"
+            style="@style/Widget.AppCompat.EditText.Login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.EditText.Login"
             android:layout_below="@+id/vPassword"
             android:drawableStart="@drawable/ic_password"
             android:inputType="textPersonName"
@@ -88,10 +87,10 @@
     <Button
         android:id="@+id/mLoginBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_height"
         android:layout_below="@+id/legal"
         android:layout_margin="16dp"
-        android:background="@drawable/background_btn_accent"
+        android:background="@drawable/bg_btn_accent"
         android:text="@string/label_captain_login"
         android:textColor="@android:color/white"
         android:textSize="18sp"

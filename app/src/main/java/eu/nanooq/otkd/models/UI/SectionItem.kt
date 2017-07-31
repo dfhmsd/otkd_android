@@ -9,7 +9,11 @@ data class SectionItem(
         var name: String = "",
         var length: Float = 0.0f,
         var difficulty: Long = 0,
-        var crossFall: String = "",
+        var high: String = "",
+        var down: String = "",
+        var description: String = "",
         var runnerName: String = "",
-        var runnerImgUrl: String = ""
+        var runnerImgUrl: String = "",
+        var runnerOrder: Int = 0,
+        var runnerAverageTime: String = ""
 )

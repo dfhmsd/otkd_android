@@ -67,6 +67,14 @@ dependencies {
     compile "com.google.firebase:firebase-auth:${firebaseVersion}"
     compile "com.androidhuman.rxfirebase2:firebase-database-kotlin:10.2.6.0"
 
+    // Google play services
+    compile "com.google.android.gms:play-services-maps:11.0.4"
+
+    //Google Maps Utils
+    compile 'com.google.maps.android:android-maps-utils:0.5'
+
+    //Gson
+    compile 'com.google.code.gson:gson:2.8.1'
 
     // Dagger 2
     compile "com.google.dagger:dagger:${daggerVersion}"

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="round_corners_radius">5dp</dimen>
+    <dimen name="button_height">56dp</dimen>
+    <dimen name="separator_width">2dp</dimen>
+    <dimen name="default_margin">20dp</dimen>
+
 </resources>

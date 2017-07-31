@@ -1,11 +1,14 @@
 package eu.nanooq.otkd.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.Gson
 import eu.nanooq.otkd.R
+import eu.nanooq.otkd.activities.SectionDetailActivity
 import eu.nanooq.otkd.adapters.SectionsRecAdapter
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
@@ -21,7 +24,7 @@ import timber.log.Timber
  */
 class AllSectionsFragment : ViewModelFragment<IAllSectionsView, AllSectionsViewModel>() , IAllSectionsView {
 
-    var mAdapter = SectionsRecAdapter(ArrayList())
+    lateinit var mAdapter: SectionsRecAdapter
 
     companion object {
         fun newInstance(): AllSectionsFragment {
@@ -36,10 +39,18 @@ class AllSectionsFragment : ViewModelFragment<IAllSectionsView, AllSectionsViewM
         super.onCreateView(inflater, container, savedInstanceState)
         val view = container?.inflate(R.layout.fragment_all_sections)
 
-
-
+        mAdapter = SectionsRecAdapter(ArrayList()) {
+            onDetailItemClick(it)
+        }
 
         return view
+    }
+
+    private fun onDetailItemClick(sectionItem: SectionItem) {
+        //todo pass sectionID and runner name
+        val intent = Intent(context, SectionDetailActivity::class.java)
+        intent.putExtra("item", Gson().toJson(sectionItem))
+        startActivity(intent)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -54,7 +65,7 @@ class AllSectionsFragment : ViewModelFragment<IAllSectionsView, AllSectionsViewM
 
     override fun updateAdapter(newItems: ArrayList<SectionItem>) {
         Timber.d("updateAdapter() $newItems")
-        vSectionsCount.text = newItems.size.toString()
+        vSectionsCount.text = "${newItems.size} úsekov"
 
         mAdapter.addItems(newItems)
     }

@@ -25,11 +25,16 @@ class UserSectionsViewModel : BaseViewModel<IUserSectionsView>() {
         Timber.d("onCreate()")
         super.onCreate(arguments, savedInstanceState)
 
-        val user = mPreferencesHelper.getUser()
-        user?.let { loadUserData(user) }
 
     }
 
+    override fun onStart() {
+        Timber.d("onStart()")
+        super.onStart()
+
+        val user = mPreferencesHelper.getUser()
+        user?.let { loadUserData(user) }
+    }
 
     private fun loadUserData(user: User) {
         Timber.i("loadUserData() ${user.team_name}")
@@ -81,6 +86,9 @@ class UserSectionsViewModel : BaseViewModel<IUserSectionsView>() {
 
             var userFirstName: String = ""
             var userLastName: String = ""
+            var userOrder: Int = 0
+            var userAverageTime: String = ""
+            var userImgUrl: String = ""
             val usersSections: ArrayList<Int>
             if (user is UserCaptain) {
                 usersSections = members.filter {
@@ -90,6 +98,9 @@ class UserSectionsViewModel : BaseViewModel<IUserSectionsView>() {
                         .also {
                             userFirstName = it?.first_name ?: ""
                             userLastName = it?.last_name ?: ""
+                            userOrder = it?.order ?: 0
+                            userAverageTime = it?.time_per_10_km ?: ""
+                            userImgUrl = it?.user_photo ?: ""
                         }
                         ?.sections
                         ?: ArrayList()
@@ -103,6 +114,9 @@ class UserSectionsViewModel : BaseViewModel<IUserSectionsView>() {
                             .also {
                                 userFirstName = it?.first_name ?: ""
                                 userLastName = it?.last_name ?: ""
+                                userImgUrl = it?.user_photo ?: ""
+                                userOrder = it?.order ?: 0
+                                userAverageTime = it?.time_per_10_km ?: ""
                             }
                             ?.sections
                             ?: ArrayList()
@@ -118,10 +132,13 @@ class UserSectionsViewModel : BaseViewModel<IUserSectionsView>() {
                     name = it.section_name ?: ""
                     length = it.km ?: 0.0f
                     difficulty = it.hard ?: 0
-                    val high = it.high ?: 0
-                    val down = it.down ?: 0
-                    crossFall = "$high - $down"
+                    high = it.high.toString()
+                    down = it.down.toString()
+                    description = it.description ?: ""
                     runnerName = "$userFirstName $userLastName"
+                    runnerImgUrl = userImgUrl
+                    runnerOrder = userOrder
+                    runnerAverageTime = userAverageTime
                 }
                 sectionItems.add(sectionItem)
 

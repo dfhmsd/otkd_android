@@ -8,6 +8,7 @@ import eu.nanooq.otkd.R
 import eu.nanooq.otkd.adapters.SectionsPagerAdapter
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
+import eu.nanooq.otkd.viewModels.IActivityToolbar
 import eu.nanooq.otkd.viewModels.main.sections.ISectionsView
 import eu.nanooq.otkd.viewModels.main.sections.SectionsViewModel
 import kotlinx.android.synthetic.main.fragment_sections.*
@@ -19,6 +20,7 @@ import timber.log.Timber
  */
 class SectionsFragment : ViewModelFragment<ISectionsView, SectionsViewModel>() , ISectionsView {
 
+    lateinit var mToolbarCallback: IActivityToolbar
     companion object {
 
         const val ALL_SECTION_TAB = "VŠETKY ÚSEKY"
@@ -39,8 +41,12 @@ class SectionsFragment : ViewModelFragment<ISectionsView, SectionsViewModel>() ,
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mToolbarCallback = activity as IActivityToolbar
+
         vSectionsPager.adapter = SectionsPagerAdapter(childFragmentManager)
         vSectionTabs.setupWithViewPager(vSectionsPager)
+
+        mToolbarCallback.onToolbarTitleChange(getString(R.string.sections_toolbar_title))
 
     }
 }

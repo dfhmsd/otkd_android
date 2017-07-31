@@ -3,17 +3,17 @@ package eu.nanooq.otkd.helpers
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import eu.nanooq.otkd.App
 import eu.nanooq.otkd.di.IDependency
 import eu.nanooq.otkd.edit
+import eu.nanooq.otkd.models.API.User
 import eu.nanooq.otkd.models.API.UserCaptain
 import eu.nanooq.otkd.models.API.UserRunner
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import eu.nanooq.otkd.models.API.User
-import timber.log.Timber
 
 
 /**
@@ -35,7 +35,6 @@ constructor(private var mContext: Context) : IDependency {
     private lateinit var runnerMoshiAdapter: JsonAdapter<UserRunner>
     private lateinit var captainMoshiAdapter: JsonAdapter<UserCaptain>
 
-    private var mIsCaptain: Boolean? = null
 
     override fun init() {
         App.component.inject(this)
@@ -53,7 +52,6 @@ constructor(private var mContext: Context) : IDependency {
 
     fun saveUser(runner: UserRunner) {
         Timber.d("saveUser()")
-        mIsCaptain = false
         mPreferences.edit {
             putString(RUNNER, runnerMoshiAdapter.toJson(runner))
             putString(CAPTAIN, null)
@@ -62,7 +60,6 @@ constructor(private var mContext: Context) : IDependency {
 
     fun saveUser(captain: UserCaptain) {
         Timber.d("saveUser()")
-        mIsCaptain = true
         mPreferences.edit {
             putString(CAPTAIN, captainMoshiAdapter.toJson(captain))
             putString(RUNNER, null)
@@ -81,6 +78,13 @@ constructor(private var mContext: Context) : IDependency {
             if (runner != null) {
                 runnerMoshiAdapter.fromJson(runner)
             } else return null
+        }
+    }
+
+    fun deleteUserData() {
+        mPreferences.edit {
+            putString(RUNNER, null)
+            putString(CAPTAIN, null)
         }
     }
 

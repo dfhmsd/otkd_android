@@ -5,63 +5,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="eu.nanooq.otkd.activities.LoginActivity"
-    android:background="@drawable/bg_login"
     >
     <ImageView
         android:id="@+id/mLogo"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/ic_logo_white"
         android:layout_above="@+id/slogan"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_logo_white"
         />
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/slogan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/mVubLogo"
+        android:layout_margin="16dp"
+        android:gravity="center"
         android:text="@string/under_logo_slogan"
         android:textColor="@color/primaryTextColor"
         android:textSize="18sp"
-        android:gravity="center"
+        />
+
+    <ImageView
+        android:id="@+id/mVubLogo"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/mLoginButtonsRegion"
+        android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/logo_vub_white"
         />
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/mLoginButtonsRegion"
-        android:layout_height="56dp"
         android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/secondaryAccent"
         >
         <Button
             android:id="@+id/mLogCaptain"
-            app:layout_widthPercent="50%"
             android:layout_height="match_parent"
+            android:layout_marginStart="-1dp"
             android:background="@android:color/transparent"
             android:text="@string/som_kapitan"
             android:textColor="@color/primaryTextColor"
-            android:layout_marginStart="-1dp"
+            app:layout_widthPercent="50%"
             />
         <View
+            android:layout_width="@dimen/separator_width"
             android:layout_height="match_parent"
-            android:layout_width="2dp"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/mLogCaptain"
             android:background="@android:color/white"
             />
         <Button
             android:id="@+id/mLogRunner"
-            app:layout_widthPercent="50%"
-            android:background="@android:color/transparent"
             android:layout_height="match_parent"
             android:layout_marginEnd="-1dp"
             android:layout_toEndOf="@+id/mLogCaptain"
+            android:background="@android:color/transparent"
             android:text="@string/som_bezec"
             android:textColor="@color/primaryTextColor"
+            app:layout_widthPercent="50%"
             />
 
     </android.support.percent.PercentRelativeLayout>

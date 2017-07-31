@@ -2,7 +2,7 @@
 <tabs>
     <tab
         icon="@drawable/ic_sections"
-        id="@+id/action_search"
+        id="@+id/action_sections"
         />
     <tab
         icon="@drawable/ic_team"

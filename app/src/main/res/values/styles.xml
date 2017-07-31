@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+
     </style>
 
     <style name="TextAppearance.AppCompat.TextInputLayout" parent="TextAppearance.AppCompat">
@@ -32,7 +34,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingStart">8dp</item>
-        <item name="android:background">@drawable/background_login_field</item>
+        <item name="android:background">@drawable/bg_login_field</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="android:hint">@string/email_hint</item>
         <item name="android:textColor">@color/secondaryTextColor</item>
@@ -50,5 +52,22 @@
         <item name="android:ellipsize">marquee</item>
         <item name="fontPath">@string/opensans_font_path</item>
     </style>
+
+    <style name="SectionDetail.Value" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <style name="SectionDetail.Label" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
 
 </resources>

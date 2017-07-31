@@ -1,11 +1,14 @@
 package eu.nanooq.otkd.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.Gson
 import eu.nanooq.otkd.R
+import eu.nanooq.otkd.activities.SectionDetailActivity
 import eu.nanooq.otkd.adapters.SectionsRecAdapter
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
@@ -26,7 +29,7 @@ import timber.log.Timber
  */
 class UserSectionsFragment : ViewModelFragment<IUserSectionsView, UserSectionsViewModel>() , IUserSectionsView {
 
-    var mAdapter = SectionsRecAdapter(ArrayList())
+    lateinit var mAdapter: SectionsRecAdapter
 
     companion object {
         fun newInstance(): UserSectionsFragment {
@@ -38,6 +41,11 @@ class UserSectionsFragment : ViewModelFragment<IUserSectionsView, UserSectionsVi
         Timber.d("onCreateView()")
         super.onCreateView(inflater, container, savedInstanceState)
         val view = container?.inflate(R.layout.fragment_user_sections)
+
+        mAdapter = SectionsRecAdapter(ArrayList()) {
+            onDetailItemClick(it)
+        }
+
         return view
     }
 
@@ -57,5 +65,12 @@ class UserSectionsFragment : ViewModelFragment<IUserSectionsView, UserSectionsVi
         Timber.d("updateAdapter() $list")
         vUserSectionsCount.text = list.size.toString()
         mAdapter.addItems(list)
+    }
+
+    private fun onDetailItemClick(sectionItem: SectionItem) {
+        //todo pass sectionID and runner name
+        val intent = Intent(context, SectionDetailActivity::class.java)
+        intent.putExtra("item", Gson().toJson(sectionItem))
+        startActivity(intent)
     }
 }
