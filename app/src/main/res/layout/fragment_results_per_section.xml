@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/runner_section_detail"
+    android:id="@+id/results_per_section"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
     <LinearLayout
-        android:id="@+id/runner_section_detail_container"
+        android:id="@+id/results_per_section_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
@@ -45,24 +45,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="-1dp"
                 app:layout_widthPercent="50%"
-                tools:text="12,4 km"
+                tools:text="12"
 
                 />
 
             <TextView
-                android:id="@+id/runner_section_length_label"
+                android:id="@+id/section_count_label"
                 style="@style/SectionDetail.Label"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vSectionsResultCount"
                 android:layout_marginStart="-1dp"
-                android:text="@string/length_label"
+                android:text="@string/sections_label"
                 app:layout_widthPercent="50%"
                 />
 
             <View
                 android:id="@+id/sep_length"
                 android:layout_height="@dimen/separator_width"
-                android:layout_below="@+id/section_length_label"
+                android:layout_below="@+id/section_count_label"
                 android:layout_marginStart="-1dp"
                 android:background="@color/colorPrimary"
                 app:layout_marginEndPercent="5%"
@@ -76,7 +76,7 @@
                 android:layout_below="@+id/sep_length"
                 android:layout_marginStart="-1dp"
                 app:layout_widthPercent="50%"
-                tools:text="12,4 km"
+                tools:text="32 timov"
 
                 />
 
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vSectionStartedValue"
                 android:layout_marginStart="-1dp"
-                android:text="@string/high_label"
+                android:text="@string/started_label"
                 app:layout_widthPercent="50%"
                 />
 
@@ -106,7 +106,7 @@
                 android:layout_marginEnd="-1dp"
                 android:layout_toEndOf="@+id/sep_lengtha"
                 app:layout_widthPercent="50%"
-                tools:text="2"
+                tools:text="365"
                 />
 
             <TextView
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/vSectionResultLengthValue"
                 android:layout_toEndOf="@+id/sep_lengtha"
-                android:text="@string/obtiaznost"
+                android:text="@string/results_length"
                 app:layout_widthPercent="50%"
 
                 />
@@ -139,7 +139,7 @@
                 android:layout_marginEnd="-1dp"
                 android:layout_toEndOf="@+id/sep_lengtha"
                 app:layout_widthPercent="50%"
-                tools:text="200"
+                tools:text="3"
                 />
 
             <TextView
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/vSectionFinishedValue"
                 android:layout_toEndOf="@+id/sep_lengtha"
-                android:text="@string/section_down_label"
+                android:text="@string/results_finished"
                 app:layout_widthPercent="50%"
 
                 />
@@ -162,92 +162,11 @@
             android:background="@color/colorPrimary"
             />
 
-        <TextView
-            android:id="@+id/vSectionDescription"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/vSectionsResultsRecView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:textColor="@color/primaryTextColor"
-            tools:text="Navzdory všeobecnému přesvědčení Lorem Ipsum není náhodný text. Jeho původ má kořeny v klasické latinské literatuře z roku 45 před Kristem, což znamená, že je více jak 2000 let staré. Richard McClintock, profesor latiny na univerzitě Hampden-Sydney stát Virginia, který se zabýval téměř neznámými latinskými slovy, odhalil prapůvod slova consectetur z pasáže Lorem Ipsum. Nejstarším dílem, v němž se pasáže Lorem Ipsum používají, je Cicerova kniha z roku 45 před Kristem s názvem  (O koncích dobra a zla), konkrétně jde pak o kapitoly 1.10.32 a 1.10.33. Tato kniha byla nejvíce známá v době renesance, jelikož pojednávala o etice. Úvodní řádky Lorem Ipsum, , pocházejí z kapitoly 1.10.32 z uvedené knihy."
             />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator_width"
-            android:background="@color/colorPrimary"
-            />
-
-        <android.support.percent.PercentRelativeLayout
-            android:id="@+id/vUsersection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            >
-
-            <ImageView
-                android:id="@+id/vSectionRunnerImage"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                />
-
-            <TextView
-                android:id="@+id/vSectionRunnerName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:layout_toEndOf="@+id/vSectionRunnerImage"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="16sp"
-                tools:text="Svetlana margetova"
-                />
-
-            <TextView
-                android:id="@+id/vSectionRunnerPlace"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/vSectionRunnerName"
-                android:layout_marginBottom="4dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:layout_toEndOf="@+id/vSectionRunnerImage"
-                android:textColor="@color/secondaryTextColor"
-                android:textSize="12sp"
-                tools:text="Svetlana margetova"
-                />
-
-            <TextView
-                android:id="@+id/vSectionRunnerTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/vSectionRunnerPlace"
-                android:layout_marginBottom="4dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:layout_toEndOf="@+id/vSectionRunnerImage"
-                android:textColor="@color/secondaryTextColor"
-                android:textSize="12sp"
-                tools:text="Svetlana margetova"
-                />
-
-        </android.support.percent.PercentRelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator_width"
-            android:background="@color/colorPrimary"
-            />
-
-        <Button
-            android:id="@+id/vDetailAndResults"
-            fontPath="@string/opensans_semibold_font_path"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:background="@drawable/bg_btn_secondary_accent"
-            android:text="@string/detail_trasy_a_poradie"
-            android:textColor="@color/primaryTextColor"
-            />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

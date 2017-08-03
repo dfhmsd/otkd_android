@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import eu.inloop.viewmodel.IView
 import eu.nanooq.otkd.R
+import eu.nanooq.otkd.adapters.ResultsPagerAdapter
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
+import eu.nanooq.otkd.viewModels.IActivityToolbar
 import eu.nanooq.otkd.viewModels.base.BaseViewModel
+import kotlinx.android.synthetic.main.fragment_results.*
 import timber.log.Timber
 
 /**
@@ -18,6 +21,9 @@ import timber.log.Timber
 class ResultsFragment : ViewModelFragment<IView, BaseViewModel<IView>>(), IView {
 
     companion object {
+        const val PER_SECTIONS = "Po úsekoch"
+        const val STANDINGS = "Celkové poradie"
+
         fun newInstance(): ResultsFragment {
             return ResultsFragment()
         }
@@ -33,6 +39,11 @@ class ResultsFragment : ViewModelFragment<IView, BaseViewModel<IView>>(), IView 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val mToolbarCallback = activity as IActivityToolbar
 
+        vResultsPager.adapter = ResultsPagerAdapter(childFragmentManager)
+        vResultsTabs.setupWithViewPager(vResultsPager)
+
+        mToolbarCallback.onToolbarTitleChange(getString(R.string.results_toolbar_title))
     }
 }

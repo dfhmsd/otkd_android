@@ -40,7 +40,6 @@ class AllSectionsFragment : ViewModelFragment<IAllSectionsView, AllSectionsViewM
         super.onCreateView(inflater, container, savedInstanceState)
         val view = container?.inflate(R.layout.fragment_all_sections)
 
-        vSectionsCount
         mAdapter = SectionsRecAdapter(ArrayList(), context) {
             onDetailItemClick(it)
         }

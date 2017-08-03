@@ -37,3 +37,28 @@ data class UserData(
         var team_number: Long? = null
 
 )
+
+data class TeamResult(
+        var category: String? = null,
+        var final_result: Int? = null,
+        var final_result_in_category: Int? = null,
+        var final_team_time: String? = null,
+        var sections: ArrayList<TeamSectionResult>? = null,
+        var team_id: Int? = null,
+        var team_name: String? = null,
+        var team_number: Int? = null,
+        var time_from_start: Float? = null
+
+)
+
+data class TeamSectionResult(
+        var best_time: Float? = 0.0f,
+        var estimated_time: Float? = 0.0f,
+        var real_time: Float? = 0.0f,
+        var result_on_section: Int? = 0,
+        var runner: String? = "",
+        var section_id: Int? = 0,
+        var section_name: String? = "",
+        var time_when_run: String? = "",
+        var worst_time: Float? = 0.0f
+)
