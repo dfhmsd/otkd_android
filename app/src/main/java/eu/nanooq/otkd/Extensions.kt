@@ -2,14 +2,12 @@ package eu.nanooq.otkd
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.support.annotation.ColorInt
 import android.support.annotation.StringRes
-import android.support.v4.content.ContextCompat
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import eu.nanooq.otkd.di.IDependency
-import timber.log.Timber
+import java.nio.charset.Charset
 
 /**
  *
@@ -29,3 +27,10 @@ inline fun SharedPreferences.edit(func: SharedPreferences.Editor.() -> Unit) {
     editor.func()
     editor.apply()
 }
+
+fun String?.toBase64(): String? {
+    if (this == null) return null
+    return Base64.encodeToString(this.toByteArray(Charset.forName("UTF-8")), Base64.NO_WRAP)
+}
+
+

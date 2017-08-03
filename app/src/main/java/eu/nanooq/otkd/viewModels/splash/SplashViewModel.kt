@@ -32,7 +32,6 @@ class SplashViewModel : BaseViewModel<ISplashView>() {
     }
 
     fun checkIfUserIsAlreadyLogged() {
-
         val user = mPreferencesHelper.getUser()
         Timber.d("onLoginRunnerClick() $user")
         user?.run { view?.autoSignInUser(user) }

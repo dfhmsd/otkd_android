@@ -40,9 +40,8 @@ class SplashActivity : ViewModelActivity<ISplashView, SplashViewModel>() , ISpla
     }
 
     override fun autoSignInUser(user: User) {
-        val intent = Intent(this , MainActivity::class.java )
-//        intent.putExtra(CAPTAIN, false)
-        startActivity(intent)
+        val mainIntent = Intent(this, MainActivity::class.java)
+        startActivity(mainIntent)
         finish()
     }
 

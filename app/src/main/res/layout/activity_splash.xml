@@ -12,7 +12,6 @@
         android:id="@+id/mLogo"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/slogan"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
         android:adjustViewBounds="true"
@@ -22,7 +21,7 @@
         android:id="@+id/slogan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/mVubLogo"
+        android:layout_below="@+id/mLogo"
         android:layout_margin="16dp"
         android:gravity="center"
         android:text="@string/under_logo_slogan"
@@ -35,8 +34,12 @@
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/mLoginButtonsRegion"
+        android:layout_below="@+id/slogan"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
         android:src="@drawable/logo_vub_white"
         />
@@ -49,29 +52,33 @@
         >
         <Button
             android:id="@+id/mLogCaptain"
+            fontPath="@string/opensans_semibold_font_path"
             android:layout_height="match_parent"
             android:layout_marginStart="-1dp"
             android:background="@android:color/transparent"
             android:text="@string/som_kapitan"
             android:textColor="@color/primaryTextColor"
+            android:textSize="16sp"
             app:layout_widthPercent="50%"
             />
         <View
             android:layout_width="@dimen/separator_width"
             android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
             android:layout_toEndOf="@+id/mLogCaptain"
-            android:background="@android:color/white"
+            android:background="@color/secondaryAccentLight"
             />
         <Button
             android:id="@+id/mLogRunner"
+            fontPath="@string/opensans_semibold_font_path"
             android:layout_height="match_parent"
             android:layout_marginEnd="-1dp"
             android:layout_toEndOf="@+id/mLogCaptain"
             android:background="@android:color/transparent"
             android:text="@string/som_bezec"
             android:textColor="@color/primaryTextColor"
+            android:textSize="16sp"
             app:layout_widthPercent="50%"
             />
 

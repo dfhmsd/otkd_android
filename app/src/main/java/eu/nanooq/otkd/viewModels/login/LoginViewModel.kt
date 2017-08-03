@@ -1,17 +1,18 @@
 package eu.nanooq.otkd.viewModels.login
 
 import android.os.Bundle
-import android.util.Base64
 import com.androidhuman.rxfirebase2.database.data
+import eu.nanooq.otkd.helpers.FirebaseHelper
 import eu.nanooq.otkd.models.API.UserCaptain
-import eu.nanooq.otkd.viewModels.base.BaseViewModel
-import timber.log.Timber
-import java.nio.charset.Charset
+import eu.nanooq.otkd.models.API.UserData
 import eu.nanooq.otkd.models.API.UserRunner
+import eu.nanooq.otkd.toBase64
+import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import eu.nanooq.otkd.viewModels.splash.SplashViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 
@@ -23,10 +24,6 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
 
 
     lateinit var mSub: Disposable
-
-    companion object {
-        const val RUNNERS_DB = "login_runner_" // TODO it will be login_runner in prod ver
-    }
 
     var mIsUserCaptain: Boolean = false
 
@@ -65,7 +62,7 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
         if (captainName.isFieldValid() && captainPassword.isFieldValid()) {
             loginCaptain(captainName, captainPassword)
         } else {
-            showError("Invalid fields")
+            showError("Nesprávne zadané údaje. Údaje vyplňte zhodne s údajmi v administrácii vrátane interpunkcie a veľkých/malých písmen")
         }
 
     }
@@ -79,7 +76,7 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
                 runnerTeam.isFieldValid()) {
             loginRunner(runnerFirstName, runnerSurname, runnerTeam)
         } else {
-            showError("Invalid fields")
+            showError("Nesprávne zadané údaje. Údaje vyplňte zhodne s údajmi v administrácii vrátane interpunkcie a veľkých/malých písmen")
         }
     }
 
@@ -90,34 +87,32 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe {
-                    Timber.d("doOnSubscribe() ${Thread.currentThread().name}")
+                    Timber.d("doOnSubscribe() ")
                     view?.showProgressBar()
                 }
                 .doFinally {
-                    Timber.d("doFinaly() ${Thread.currentThread().name}")
+                    Timber.d("doFinaly() ")
                     view?.dismissProgressBar()
                 }
                 .subscribe ({
-                    Timber.d("onNext() $it  ${Thread.currentThread().name}")
-                    saveUser(it)
-                    view?.onUserLogedIn(it)
+                    Timber.d("onNext() $it ")
+                    getCaptainTeam(it)
                 },{
-                    Timber.e("onError $it ${Thread.currentThread().name}")
-                        view?.showError(it.message?: "Could not sign in")
+                    Timber.e("onError $it ")
+                    view?.showError("Nesprávne zadané údaje. Údaje vyplňte zhodne s údajmi v administrácii.")
                 })
     }
 
     private fun loginRunner(runnerFirstName: String, runnerSurname: String, runnerTeam: String) {
         Timber.d("loginRunner() $runnerFirstName , $runnerSurname, $runnerTeam ")
 
-        val login = "$runnerTeam $runnerFirstName $runnerSurname".toByteArray(Charset.forName("UTF-8"))
-        val baseLogin = Base64.encodeToString(login, Base64.NO_WRAP)
-        var user: UserRunner? = null
+        val login = "$runnerTeam $runnerFirstName $runnerSurname".toBase64()
+        var user: UserRunner?
 
         mSub = mFirebaseHelper
                 .mFBDBReference
-                .child(RUNNERS_DB)
-                .child(baseLogin)
+                .child(FirebaseHelper.LOGIN_RUNNER)
+                .child(login)
                 .data()
                 .timeout(10, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -146,7 +141,43 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
     }
 
     private fun saveUser(runner: UserRunner) { mPreferencesHelper.saveUser(runner) }
-    private fun saveUser(captain: UserCaptain) { mPreferencesHelper.saveUser(captain) }
+
+    private fun getCaptainTeam(captain: UserCaptain) {
+        mFirebaseHelper
+                .mFBDBReference
+                .child(FirebaseHelper.USER_DATA)
+                .child(captain.email.toBase64())
+                .data()
+                .timeout(10, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    Timber.e("doOnSubscribe")
+                    view?.showProgressBar()
+                }
+                .doFinally {
+                    Timber.e("doFinally")
+                    view?.dismissProgressBar()
+                }
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    //onSuccess
+                    Timber.d("onSuccess $it")
+                    val userData: UserData? = it.getValue(UserData::class.java)
+
+                    userData?.let {
+                        captain.team_name = it.team_name ?: ""
+                        saveUser(captain)
+                        view?.onUserLogedIn(captain)
+                    }
+                }, {
+                    //onError
+                    Timber.e("onError ${it.message} ")
+                })
+    }
+
+    private fun saveUser(captain: UserCaptain) {
+        mPreferencesHelper.saveUser(captain)
+    }
 
     private fun showError(msg: String) { view?.showError(msg) }
 

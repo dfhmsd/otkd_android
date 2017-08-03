@@ -17,8 +17,16 @@
         android:id="@+id/vMainContentPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/vMainNavigation"
+        android:layout_above="@+id/sep"
         android:layout_below="@+id/mToolbar"
+        />
+
+    <View
+        android:id="@+id/sep"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/vMainNavigation"
+        android:background="@color/colorPrimary"
         />
 
     <com.roughike.bottombar.BottomBar

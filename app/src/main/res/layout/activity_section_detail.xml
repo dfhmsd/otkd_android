@@ -19,6 +19,7 @@
         android:id="@+id/vDetailsTabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:tabBackground="@color/colorPrimaryDark"
         app:tabIndicatorColor="@android:color/white"
         app:tabSelectedTextColor="@android:color/white"

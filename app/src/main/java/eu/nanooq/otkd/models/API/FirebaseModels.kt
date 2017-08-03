@@ -1,5 +1,6 @@
 package eu.nanooq.otkd.models.API
 
+
 /**
  *
  * Created by rd on 29/07/2017.
@@ -15,26 +16,24 @@ data class Section(
         var km: Float? = null,
         var route_profile: String? = null,
         var section_name: String? = null
-)
+) {
+
+}
 
 data class Team(
-        var members: ArrayList<Member>? ,
+        var members: ArrayList<Member>?,
         var team_number: Int?
 )
 
-data class Member(
-        var birth_year: Int? = null,
-        var time_per_10_km: String? = null,
-        var car_number: String? = null,
-        var email: String? = null,
-        var first_name: String? = null,
-        var is_captain: Boolean? = null,
-        var last_name: String? = null,
-        var order: Int? = null,
-        var paid: Boolean? = null,
-        var phone_number: String? = null,
-        var sections: ArrayList<Int>? = null,
-        var sex: String? = null,
-        var t_shirt_size: String? = null,
-        var user_photo: String? = null
+
+data class UserData(
+        var captain_email: String? = null,
+        var category: String? = null,
+        var finish_datetime: String? = null,
+        var start_datetime: String? = null,
+        var team_id: Long? = null,
+        var team_logo: String? = null,
+        var team_name: String? = null,
+        var team_number: Long? = null
+
 )

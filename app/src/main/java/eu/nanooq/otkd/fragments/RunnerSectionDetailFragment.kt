@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
@@ -13,13 +14,16 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.data.geojson.GeoJsonLayer
 import com.google.maps.android.data.geojson.GeoJsonLineString
 import eu.nanooq.otkd.R
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
 import eu.nanooq.otkd.models.UI.SectionItem
+import eu.nanooq.otkd.viewModels.IActivityToolbar
 import eu.nanooq.otkd.viewModels.sectionDetail.IRunnerSectionDetailView
 import eu.nanooq.otkd.viewModels.sectionDetail.RunnerSectionDetailVievModel
 import kotlinx.android.synthetic.main.fragment_runner_section_detail.*
@@ -61,6 +65,40 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
 
         super.onViewCreated(view, savedInstanceState)
 
+//        runner_section_detail.requestDisallowInterceptTouchEvent(true)
+
+//        runner_section_detail_container.setOnTouchListener { _, event ->
+//            Timber.d("runner_section_detail_container OnTouchListen()")
+//
+//            runner_section_detail.requestDisallowInterceptTouchEvent(false)
+//            runner_section_detail_container.onTouchEvent(event)
+//        }
+
+        mMapMask.setOnTouchListener { _, event ->
+            val action = event.action
+            when (action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Disallow ScrollView to intercept touch events.
+                    runner_section_detail.requestDisallowInterceptTouchEvent(true)
+                    // Disable touch on transparent view
+                    false
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    // Allow ScrollView to intercept touch events.
+                    runner_section_detail.requestDisallowInterceptTouchEvent(false)
+                    true
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    runner_section_detail.requestDisallowInterceptTouchEvent(true)
+                    false
+                }
+
+                else -> true
+            }
+        }
+
         mMapView?.onCreate(savedInstanceState)
 
         mMapView?.onResume()
@@ -72,24 +110,63 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
     }
 
     private fun addSectionLineOverlay(sectionId: Int) {
-        Timber.e("addSectionLineOverlay() $sectionId")
+        Timber.d("addSectionLineOverlay() $sectionId")
 
         try {
             MapsInitializer.initialize(activity.applicationContext)
-            Timber.e("Google map initialized")
+            Timber.d("Google map initialized")
 
         } catch (e: Exception) {
             Timber.e("Google map initialization failed: ${e.message}")
         }
-        mMapView?.isClickable = false
+        mMapView?.isClickable = true
+//        mMapView.setOnClickListener {
+//            Timber.e("mapViewOnClickListener()")
+//
+//        }
 
         mMapView?.getMapAsync {
-            Timber.e("Google map initialized")
-
+            Timber.d("getMapAsync()")
             googleMap = it
-            googleMap.uiSettings.setAllGesturesEnabled(false)
+            googleMap.setOnCameraMoveStartedListener {
+                Timber.d("OnCameraMoveStartedListener()")
+                runner_section_detail.requestDisallowInterceptTouchEvent(true)
+
+            }
+            googleMap.setOnCameraMoveListener {
+                Timber.d("OnCameraMoveListener()")
+                runner_section_detail.requestDisallowInterceptTouchEvent(true)
+
+            }
+            googleMap.setOnCameraIdleListener {
+                runner_section_detail.requestDisallowInterceptTouchEvent(false)
+
+            }
+            googleMap.setOnCameraMoveCanceledListener {
+                runner_section_detail.requestDisallowInterceptTouchEvent(false)
+            }
+
+            googleMap.uiSettings.setAllGesturesEnabled(true)
+            googleMap.setOnMapClickListener {
+                Timber.e("googleMap OnClickListener()")
+
+            }
+//            googleMap.uiSettings.setAllGesturesEnabled(false)
 
             val geoLayer = GeoJsonLayer(googleMap, getSectionGeoData(sectionId), context)
+            val feature = geoLayer.features.first()
+            val geoPoints = feature.geometry.geometryObject as ArrayList<LatLng>
+            val firstPoint = geoPoints.first()
+            val lastPoint = geoPoints.last()
+
+
+
+            googleMap.addMarker(MarkerOptions()
+                    .position(firstPoint))
+            googleMap.addMarker(MarkerOptions()
+                    .position(lastPoint))
+
+
             geoLayer.addLayerToMap()
             val sectionBounds = getLayerBounds(geoLayer)
 
@@ -163,6 +240,9 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
 
     override fun setupRunner(item: SectionItem) {
 
+        val toolbarActivity = activity as IActivityToolbar
+        toolbarActivity.onToolbarTitleChange(item.name.toUpperCase())
+
         vSectionLengthValue.text = "${item.length} km"
         vSectionHighValue.text = "${item.high} m"
         vSectionDownValue.text = "${item.down} m"
@@ -171,30 +251,58 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
         vSectionDescription.text = item.description
 
         vSectionRunnerName.text = item.runnerName
-        vSectionRunnerPlace.text = "poradie ${item.runnerOrder}"
+        vSectionRunnerPlace.text = "Poradie: ${item.runnerOrder}"
         vSectionRunnerTime.text = "${item.runnerAverageTime} min/10 km"
 
-        Glide
-                .with(context)
-                .load(item.runnerImgUrl)
-                .asBitmap()
-                .centerCrop()
-                .into(object : BitmapImageViewTarget(vSectionRunnerImage) {
-                    override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
-                        super.onLoadFailed(e, errorDrawable)
-                        Timber.e("onLoadFailed")
-                        val iconBmp = BitmapFactory.decodeResource(resources, R.drawable.ic_default_user)
-                        val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, iconBmp)
-                        circularBitmapDrawable.isCircular = true
-                        vSectionRunnerImage.setImageDrawable(circularBitmapDrawable)
-                    }
+        if (item.runnerName.isBlank()) {
+            Glide
+                    .with(context)
+                    .load(R.drawable.ic_placeholder_unassigned)
+                    .asBitmap()
+                    .centerCrop()
+                    .into(object : BitmapImageViewTarget(vSectionRunnerImage) {
+                        override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
+                            super.onLoadFailed(e, errorDrawable)
+                            Timber.e("onLoadFailed")
+                            val iconBmp = BitmapFactory.decodeResource(resources, R.drawable.ic_placeholder_unassigned)
+                            val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, iconBmp)
+                            circularBitmapDrawable.isCircular = true
+                            vSectionRunnerImage.setImageDrawable(circularBitmapDrawable)
+                        }
 
-                    override fun setResource(resource: Bitmap) {
-                        val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, resource)
-                        circularBitmapDrawable.isCircular = true
-                        vSectionRunnerImage.setImageDrawable(circularBitmapDrawable)
-                    }
-                })
+                        override fun setResource(resource: Bitmap) {
+                            Timber.d("setResource")
+
+                            val iconBmp = BitmapFactory.decodeResource(resources, R.drawable.ic_placeholder_unassigned)
+                            val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, iconBmp)
+                            circularBitmapDrawable.isCircular = true
+                            vSectionRunnerImage.setImageDrawable(circularBitmapDrawable)
+                        }
+                    })
+        } else {
+
+            Glide
+                    .with(context)
+                    .load(item.runnerImgUrl)
+                    .asBitmap()
+                    .centerCrop()
+                    .into(object : BitmapImageViewTarget(vSectionRunnerImage) {
+                        override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
+                            super.onLoadFailed(e, errorDrawable)
+                            Timber.e("onLoadFailed")
+                            val iconBmp = BitmapFactory.decodeResource(resources, R.drawable.ic_default_user)
+                            val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, iconBmp)
+                            circularBitmapDrawable.isCircular = true
+                            vSectionRunnerImage.setImageDrawable(circularBitmapDrawable)
+                        }
+
+                        override fun setResource(resource: Bitmap) {
+                            val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, resource)
+                            circularBitmapDrawable.isCircular = true
+                            vSectionRunnerImage.setImageDrawable(circularBitmapDrawable)
+                        }
+                    })
+        }
 
     }
 }

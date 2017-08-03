@@ -42,7 +42,7 @@ class UserSectionsFragment : ViewModelFragment<IUserSectionsView, UserSectionsVi
         super.onCreateView(inflater, container, savedInstanceState)
         val view = container?.inflate(R.layout.fragment_user_sections)
 
-        mAdapter = SectionsRecAdapter(ArrayList()) {
+        mAdapter = SectionsRecAdapter(ArrayList(), context) {
             onDetailItemClick(it)
         }
 
@@ -63,7 +63,7 @@ class UserSectionsFragment : ViewModelFragment<IUserSectionsView, UserSectionsVi
 
     override fun updateAdapter(list: ArrayList<SectionItem>) {
         Timber.d("updateAdapter() $list")
-        vUserSectionsCount.text = list.size.toString()
+        vUserSectionsCount.text = "${list.size} úsekov"
         mAdapter.addItems(list)
     }
 

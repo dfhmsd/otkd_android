@@ -51,7 +51,7 @@ class MainActivity : ViewModelActivity<IMainView, MainViewModel>(), IMainView, I
 
         mAdapter = MainPagerAdapter(supportFragmentManager)
         vMainContentPager.adapter = mAdapter
-        vMainContentPager.setOnTouchListener { view, event ->
+        vMainContentPager.setOnTouchListener { _, _ ->
             false
         }
 

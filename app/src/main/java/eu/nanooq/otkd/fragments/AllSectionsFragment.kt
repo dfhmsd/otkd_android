@@ -18,6 +18,7 @@ import eu.nanooq.otkd.viewModels.main.sections.IAllSectionsView
 import kotlinx.android.synthetic.main.fragment_all_sections.*
 import timber.log.Timber
 
+
 /**
  *
  * Created by rd on 28/07/2017.
@@ -39,7 +40,8 @@ class AllSectionsFragment : ViewModelFragment<IAllSectionsView, AllSectionsViewM
         super.onCreateView(inflater, container, savedInstanceState)
         val view = container?.inflate(R.layout.fragment_all_sections)
 
-        mAdapter = SectionsRecAdapter(ArrayList()) {
+        vSectionsCount
+        mAdapter = SectionsRecAdapter(ArrayList(), context) {
             onDetailItemClick(it)
         }
 
@@ -48,6 +50,8 @@ class AllSectionsFragment : ViewModelFragment<IAllSectionsView, AllSectionsViewM
 
     private fun onDetailItemClick(sectionItem: SectionItem) {
         //todo pass sectionID and runner name
+//in your OnCreate() method
+
         val intent = Intent(context, SectionDetailActivity::class.java)
         intent.putExtra("item", Gson().toJson(sectionItem))
         startActivity(intent)
@@ -59,6 +63,7 @@ class AllSectionsFragment : ViewModelFragment<IAllSectionsView, AllSectionsViewM
 
         mAdapter.hasStableIds()
         vAllSectionsRecView.adapter = mAdapter
+        vAllSectionsRecView.isNestedScrollingEnabled = false
         vAllSectionsRecView.layoutManager = LinearLayoutManager(context)
         vAllSectionsRecView.hasFixedSize()
     }

@@ -4,9 +4,11 @@
     <color name="colorPrimaryDark">#1C1D35</color>
     <color name="colorAccent">#5ADB82</color>
     <color name="secondaryAccent">#E65514</color>
+    <color name="secondaryAccentLight">#FA9669</color>
 
     <color name="primaryTextColor">@android:color/white</color>
     <color name="secondaryTextColor">#A7AAC6</color>
     <color name="white">@android:color/white</color>
+    <color name="semiTransparent">#a8000000</color>
 
 </resources>

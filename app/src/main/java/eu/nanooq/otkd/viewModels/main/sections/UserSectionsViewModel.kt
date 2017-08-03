@@ -6,6 +6,7 @@ import com.google.firebase.database.GenericTypeIndicator
 import eu.nanooq.otkd.helpers.FirebaseHelper
 import eu.nanooq.otkd.models.API.*
 import eu.nanooq.otkd.models.UI.SectionItem
+import eu.nanooq.otkd.toBase64
 import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -55,25 +56,22 @@ class UserSectionsViewModel : BaseViewModel<IUserSectionsView>() {
                 .toFlowable(BackpressureStrategy.LATEST)
         val teamObservable = mFirebaseHelper.mFBDBReference
                 .child(FirebaseHelper.TEAM_MEMBERS)
-//                .child(user.team_name)  TODO odkomentovat az v team_members budou vsechny teamy
-                .child("Povieme to behom")
+                .child(user.team_name.toBase64())
                 .child(FirebaseHelper.MEMBERS)
                 .dataChanges()
                 .map {
-                    var team: ArrayList<Member>?
+                    var array = ArrayList<Member>()
                     try {
-                        val typeList = object : GenericTypeIndicator<ArrayList<Member>>() {}
-                        team = it.getValue(typeList)
+                        val typeList = object : GenericTypeIndicator<HashMap<String, Member>>() {}
+                        val team = it.getValue(typeList)
+                        team?.forEach {
+                            array.add(it.value)
+                        }
                     } catch (exc: Exception) {
-                        Timber.e("catch() ${exc.message}")
-                        team = ArrayList()
+                        val typeList = object : GenericTypeIndicator<ArrayList<Member>>() {}
+                        array = it.getValue(typeList) ?: ArrayList()
                     }
-
-//                    val array = ArrayList<Member>()
-//                    team?.forEach {
-//                        array.add(it.value)
-//                    }
-                    team ?: ArrayList()
+                    array
                 }
                 .toFlowable(BackpressureStrategy.LATEST)
 
@@ -86,64 +84,75 @@ class UserSectionsViewModel : BaseViewModel<IUserSectionsView>() {
 
             var userFirstName: String = ""
             var userLastName: String = ""
-            var userOrder: Int = 0
+            var userOrder: String = ""
             var userAverageTime: String = ""
             var userImgUrl: String = ""
-            val usersSections: ArrayList<Int>
-            if (user is UserCaptain) {
-                usersSections = members.filter {
-                    it.is_captain ?: false
-                }
+            val usersSections: ArrayList<Int> = if (user is UserCaptain) {
+                val captainSections: ArrayList<Int> = ArrayList()
+                val captain: Member? = members.filter { it.is_captain }
                         .firstOrNull()
-                        .also {
+                Timber.d("userIsCaptain $captain")
+
+                captain.also {
                             userFirstName = it?.first_name ?: ""
                             userLastName = it?.last_name ?: ""
-                            userOrder = it?.order ?: 0
-                            userAverageTime = it?.time_per_10_km ?: ""
+                    userOrder = it?.order.toString()
+                    userAverageTime = it?.time_per_10_km.toString()
                             userImgUrl = it?.user_photo ?: ""
                         }
                         ?.sections
-                        ?: ArrayList()
+                        ?.forEach {
+                            captainSections.add(it)
+                        }
+                captainSections
+
             } else {
-                usersSections = if (user is UserRunner) {
+                val runnerSections: ArrayList<Int> = ArrayList()
+
+                if (user is UserRunner) {
+                    Timber.d("userIsRunner ${user.first_name}")
                     members.filter {
-                        it.first_name == user.first_name
-                                && it.last_name == user.last_name
+                        it.first_name == user.first_name &&
+                                it.last_name == user.last_name
                     }
                             .firstOrNull()
                             .also {
                                 userFirstName = it?.first_name ?: ""
                                 userLastName = it?.last_name ?: ""
                                 userImgUrl = it?.user_photo ?: ""
-                                userOrder = it?.order ?: 0
-                                userAverageTime = it?.time_per_10_km ?: ""
+                                userOrder = it?.order.toString()
+                                userAverageTime = it?.time_per_10_km.toString()
                             }
                             ?.sections
-                            ?: ArrayList()
-                } else {
-                    ArrayList()
+                            ?.forEach {
+                                runnerSections.add(it)
+                            }
                 }
-            }
-            sections.filter { usersSections.contains(it.id) }.orEmpty().forEach {
-                val sectionItem = SectionItem()
-                with(sectionItem) {
-                    val sectionId = it.id ?: 0
-                    Id = sectionId
-                    name = it.section_name ?: ""
-                    length = it.km ?: 0.0f
-                    difficulty = it.hard ?: 0
-                    high = it.high.toString()
-                    down = it.down.toString()
-                    description = it.description ?: ""
-                    runnerName = "$userFirstName $userLastName"
-                    runnerImgUrl = userImgUrl
-                    runnerOrder = userOrder
-                    runnerAverageTime = userAverageTime
-                }
-                sectionItems.add(sectionItem)
-
+                runnerSections
             }
 
+            sections.filter { usersSections.contains(it.id) }
+                    .orEmpty()
+                    .forEach {
+                        val sectionItem = SectionItem()
+                        with(sectionItem) {
+                            val sectionId = it.id ?: 0
+                            Id = sectionId
+                            name = it.section_name ?: ""
+                            length = it.km ?: 0.0f
+                            difficulty = it.hard ?: 0
+                            high = it.high.toString()
+                            down = it.down.toString()
+                            description = it.description ?: ""
+                            runnerName = "$userFirstName $userLastName"
+                            runnerImgUrl = userImgUrl
+                            runnerOrder = userOrder
+                            runnerAverageTime = userAverageTime
+                        }
+                        sectionItems.add(sectionItem)
+
+                    }
+            sectionItems.sortBy { it.Id }
             sectionItems
         }).subscribe({
             Timber.d("nice combinelatest ${it}it")

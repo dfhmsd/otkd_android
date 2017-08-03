@@ -1,5 +1,9 @@
 <resources>
 
+    <!--Splash theme-->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -9,6 +13,7 @@
         <item name="actionMenuTextColor">@android:color/white</item>
 
     </style>
+
 
     <style name="TextAppearance.AppCompat.TextInputLayout" parent="TextAppearance.AppCompat">
         <item name="colorAccent">@android:color/white</item>
@@ -29,7 +34,7 @@
     <style name="Widget.AppCompat.EditText.Login" parent="Base.Widget.AppCompat.EditText">
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginTop">14dp</item>
         <item name="android:padding">4dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -47,7 +52,8 @@
 
     <style name="TextView.ItemSection" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/secondaryTextColor</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginTop">6dp</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
         <item name="fontPath">@string/opensans_font_path</item>
@@ -57,8 +63,10 @@
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:textSize">20sp</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">4dp</item>
+        <item name="fontPath">@string/opensans_bold_font_path</item>
+
     </style>
 
     <style name="SectionDetail.Label" parent="TextAppearance.AppCompat">
@@ -66,7 +74,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginBottom">12dp</item>
     </style>
 
 

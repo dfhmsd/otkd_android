@@ -21,10 +21,10 @@ class FirebaseHelper @Inject constructor(private var mContext: Context) : IDepen
 
     companion object {
         const val SECTIONS = "sections"
-        const val TEAM_MEMBERS = "team_members"
+        const val TEAM_MEMBERS = "team_members_"
         const val MEMBERS = "members"
-        const val USER_DATA = "user_data"
-        const val RESULTS = "results"
+        const val USER_DATA = "user_data_"
+        const val RESULTS = "results_"
         const val LOGIN_RUNNER = "login_runner_"
     }
 

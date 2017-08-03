@@ -14,6 +14,6 @@ data class SectionItem(
         var description: String = "",
         var runnerName: String = "",
         var runnerImgUrl: String = "",
-        var runnerOrder: Int = 0,
+        var runnerOrder: String = "",
         var runnerAverageTime: String = ""
 )

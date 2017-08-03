@@ -1,20 +1,20 @@
 <resources>
-    <string name="app_name">OTKD</string>
+    <string name="app_name">OTKD 2017</string>
     <string name="seconds">seconds</string>
     <string name="som_kapitan">SOM KAPITÁN</string>
     <string name="som_bezec">SOM BEŽEC</string>
 
     <string name="under_logo_slogan">v spolupráci s</string>
     <string name="label_captain_title">Spravuj celý svoj tím ako kapitán</string>
-    <string name="label_captain_username">používateľské meno</string>
-    <string name="label_captain_password">heslo</string>
+    <string name="label_captain_username">Používateľské meno</string>
+    <string name="label_captain_password">Heslo</string>
     <string name="label_captain_terms">Prihlásením súhlasíte so všeobecnými podmienkami používania aplikácie.</string>
-    <string name="label_captain_login">prihlásit sa</string>
+    <string name="label_captain_login">prihlásiť sa</string>
 
     <string name="label_runner_title">Běž so svojím tímom ako bežec</string>
-    <string name="label_runner_username">meno</string>
-    <string name="label_runner_nickname">priezvisko</string>
-    <string name="label_runner_team_name">názov tímu</string>
+    <string name="label_runner_username">Meno</string>
+    <string name="label_runner_nickname">Priezvisko</string>
+    <string name="label_runner_team_name">Názov tímu</string>
     <string name="label_runner_terms">Prihlásením súhlasíte so všeobecnými podmienkami používania aplikácie.</string>
     <string name="label_runner_login">prihlásit sa</string>
     <!--font path-->
@@ -36,6 +36,6 @@
     <string name="detail_trasy_a_poradie">Detail trasy a poradie</string>
     <string name="length_label">dĺžka</string>
     <string name="high_label">stúpanie</string>
-    <string name="obtiaznost">obtiažnost</string>
+    <string name="obtiaznost">obtiažnosť</string>
     <string name="section_down_label">klesanie</string>
 </resources>

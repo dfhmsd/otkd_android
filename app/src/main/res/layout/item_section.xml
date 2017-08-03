@@ -14,10 +14,9 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="8dp"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="@dimen/round_corners_radius"
         >
@@ -31,7 +30,7 @@
             <android.support.percent.PercentRelativeLayout
                 android:id="@+id/vLeftContainer"
                 android:layout_height="wrap_content"
-                app:layout_widthPercent="60%"
+                app:layout_widthPercent="70%"
                 >
                 <TextView
                     android:id="@+id/vSectionId"
@@ -41,7 +40,7 @@
                     android:ellipsize="marquee"
                     android:singleLine="true"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     tools:text="Usek 1"
 
                     />
@@ -53,9 +52,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/vSectionId"
                     android:ellipsize="marquee"
-                    android:singleLine="true"
+                    android:maxLines="2"
                     android:textColor="@color/colorAccent"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     tools:text="Usek 1"
                     />
 
@@ -83,6 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/vSectionLength"
+                    android:visibility="gone"
                     tools:text="ablsdwblab"
                     />
             </android.support.percent.PercentRelativeLayout>
@@ -91,21 +91,22 @@
                 android:id="@+id/vRightContainer"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/vLeftContainer"
-                app:layout_widthPercent="40%"
+                app:layout_widthPercent="30%"
                 >
                 <ImageView
                     android:id="@+id/vSectionRunnerImage"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_alignParentEnd="true"
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:layout_centerHorizontal="true"
                     />
                 <TextView
                     android:id="@+id/vSectionRunnerName"
                     style="@style/TextView.ItemSection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/vSectionRunnerImage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
                     tools:text="ablsdwblab"
                     />
             </android.support.percent.PercentRelativeLayout>

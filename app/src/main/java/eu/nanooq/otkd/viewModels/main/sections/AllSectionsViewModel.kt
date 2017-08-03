@@ -8,6 +8,7 @@ import eu.nanooq.otkd.models.API.Member
 import eu.nanooq.otkd.models.API.Section
 import eu.nanooq.otkd.models.API.User
 import eu.nanooq.otkd.models.UI.SectionItem
+import eu.nanooq.otkd.toBase64
 import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -78,25 +79,26 @@ class AllSectionsViewModel : BaseViewModel<IAllSectionsView>() {
 
         val teamObservable = mFirebaseHelper.mFBDBReference
                 .child(FirebaseHelper.TEAM_MEMBERS)
-//                .child(user.team_name)  TODO odkomentovat az v team_members budou vsechny teamy
-                .child("Povieme to behom")
+                .child(user.team_name.toBase64())
                 .child(FirebaseHelper.MEMBERS)
                 .dataChanges()
                 .map {
-                    var team: ArrayList<Member>?
+                    Timber.d("teamObservable map() $it")
+                    var array = ArrayList<Member>()
                     try {
-                        val typeList = object : GenericTypeIndicator<ArrayList<Member>>() {}
-                        team = it.getValue(typeList)
+                        val typeList = object : GenericTypeIndicator<HashMap<String, Member>>() {}
+                        val team = it.getValue(typeList)
+                        team?.forEach {
+                            array.add(it.value)
+                        }
+
                     } catch (exc: Exception) {
-                        Timber.e("catch() ${exc.message}")
-                        team = ArrayList()
+                        val typeList = object : GenericTypeIndicator<ArrayList<Member>>() {}
+                        array = it.getValue(typeList) ?: ArrayList()
+
                     }
 
-//                    val array = ArrayList<Member>()
-//                    team?.forEach {
-//                        array.add(it.value)
-//                    }
-                    team ?: ArrayList()
+                    array
                 }
                 .toFlowable(BackpressureStrategy.LATEST)
 
@@ -118,17 +120,17 @@ class AllSectionsViewModel : BaseViewModel<IAllSectionsView>() {
                     high = it.high.toString()
                     down = it.down.toString()
                     description = it.description ?: ""
-                    val member = members.filter { it.sections?.contains(sectionId) ?: false }.firstOrNull()
+                    val member: Member? = members.filter { it.sections?.contains(sectionId) ?: false }.firstOrNull()
+//                    val member: Member? = members.filter { it.sections?.values?.contains(sectionId.toString()) ?: false }.firstOrNull()
                     runnerName = "${member?.first_name ?: ""} ${member?.last_name ?: ""}"
                     runnerImgUrl = member?.user_photo ?: ""
-                    runnerOrder = member?.order ?: 0
-                    runnerAverageTime = member?.time_per_10_km ?: ""
+                    runnerOrder = member?.order.toString()
+                    runnerAverageTime = member?.time_per_10_km.toString()
                 }
                 sectionItems.add(sectionItem)
             }
 
-
-
+            sectionItems.sortBy { it.Id }
             sectionItems
         }).subscribe({
             Timber.d("nice combinelatest ${it}it")
