@@ -58,6 +58,7 @@ class AllSectionsViewModel : BaseViewModel<IAllSectionsView>() {
     override fun onDestroy() {
         Timber.d("onDestroy()")
         super.onDestroy()
+        mDisposable?.dispose()
     }
 
     private fun loadUserData(user: User) {

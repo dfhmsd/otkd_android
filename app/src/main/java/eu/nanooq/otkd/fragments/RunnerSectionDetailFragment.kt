@@ -1,5 +1,6 @@
 package eu.nanooq.otkd.fragments
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.data.geojson.GeoJsonLayer
 import com.google.maps.android.data.geojson.GeoJsonLineString
 import eu.nanooq.otkd.R
+import eu.nanooq.otkd.activities.TrackDetailActivity
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
 import eu.nanooq.otkd.models.UI.SectionItem
@@ -65,16 +67,9 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
 
         super.onViewCreated(view, savedInstanceState)
 
-//        runner_section_detail.requestDisallowInterceptTouchEvent(true)
-
-//        runner_section_detail_container.setOnTouchListener { _, event ->
-//            Timber.d("runner_section_detail_container OnTouchListen()")
-//
-//            runner_section_detail.requestDisallowInterceptTouchEvent(false)
-//            runner_section_detail_container.onTouchEvent(event)
-//        }
-
         mMapMask.setOnTouchListener { _, event ->
+            Timber.d("OnTouchListener() mapView $event")
+
             val action = event.action
             when (action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -103,10 +98,15 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
 
         mMapView?.onResume()
 
-
         viewModel.getData()
 
+        vDetailAndResults.setOnClickListener { viewModel.openTrackDetail() }
+    }
 
+    override fun startTrackDetail(sectionId: Int) {
+        val trackDetailIntent = Intent(context, TrackDetailActivity::class.java)
+        trackDetailIntent.putExtra("sectionId", sectionId)
+        context.startActivity(trackDetailIntent)
     }
 
     private fun addSectionLineOverlay(sectionId: Int) {
@@ -119,39 +119,12 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
         } catch (e: Exception) {
             Timber.e("Google map initialization failed: ${e.message}")
         }
-        mMapView?.isClickable = true
-//        mMapView.setOnClickListener {
-//            Timber.e("mapViewOnClickListener()")
-//
-//        }
 
         mMapView?.getMapAsync {
             Timber.d("getMapAsync()")
             googleMap = it
-            googleMap.setOnCameraMoveStartedListener {
-                Timber.d("OnCameraMoveStartedListener()")
-                runner_section_detail.requestDisallowInterceptTouchEvent(true)
-
-            }
-            googleMap.setOnCameraMoveListener {
-                Timber.d("OnCameraMoveListener()")
-                runner_section_detail.requestDisallowInterceptTouchEvent(true)
-
-            }
-            googleMap.setOnCameraIdleListener {
-                runner_section_detail.requestDisallowInterceptTouchEvent(false)
-
-            }
-            googleMap.setOnCameraMoveCanceledListener {
-                runner_section_detail.requestDisallowInterceptTouchEvent(false)
-            }
 
             googleMap.uiSettings.setAllGesturesEnabled(true)
-            googleMap.setOnMapClickListener {
-                Timber.e("googleMap OnClickListener()")
-
-            }
-//            googleMap.uiSettings.setAllGesturesEnabled(false)
 
             val geoLayer = GeoJsonLayer(googleMap, getSectionGeoData(sectionId), context)
             val feature = geoLayer.features.first()
@@ -235,7 +208,6 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
 
     override fun setupMap(item: SectionItem) {
         addSectionLineOverlay(item.Id)
-
     }
 
     override fun setupRunner(item: SectionItem) {
@@ -243,10 +215,10 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
         val toolbarActivity = activity as IActivityToolbar
         toolbarActivity.onToolbarTitleChange(item.name.toUpperCase())
 
-        vSectionLengthValue.text = "${item.length} km"
-        vSectionHighValue.text = "${item.high} m"
-        vSectionDownValue.text = "${item.down} m"
-        vSectionDifficultyValue.text = item.difficulty.toString()
+        vSectionsResultCount.text = "${item.length} km"
+        vSectionStartedValue.text = "${item.high} m"
+        vSectionFinishedValue.text = "${item.down} m"
+        vSectionResultLengthValue.text = item.difficulty.toString()
 
         vSectionDescription.text = item.description
 

@@ -51,9 +51,10 @@ class MainActivity : ViewModelActivity<IMainView, MainViewModel>(), IMainView, I
 
         mAdapter = MainPagerAdapter(supportFragmentManager)
         vMainContentPager.adapter = mAdapter
-        vMainContentPager.setOnTouchListener { _, _ ->
-            false
-        }
+//        vMainContentPager.setOnTouchListener { _, _ ->
+//            true
+//        }
+
 
 
         val sectionsFrag = SectionsFragment.newInstance()
@@ -84,7 +85,6 @@ class MainActivity : ViewModelActivity<IMainView, MainViewModel>(), IMainView, I
                 }
             }
         }
-
     }
 
     private fun replaceContent(fragment: Fragment, tag: String) {

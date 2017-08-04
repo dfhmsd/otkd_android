@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vSectionStandingsRecView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/share_container"
+        />
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/share_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_width"
+            android:background="@color/colorPrimary"
+            />
+
+        <TextView
+            android:id="@+id/vTeamsFineshedCount"
+            fontPath="@string/opensans_semibolditalic_font_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="14sp"
+            tools:text="dobehli"
+            />
+
+        <TextView
+            android:id="@+id/vTeamsRunningCount"
+            fontPath="@string/opensans_semibolditalic_font_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="20dp"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="14sp"
+            tools:text="running"
+
+            />
+
+    </android.support.percent.PercentRelativeLayout>
+
+</android.support.percent.PercentRelativeLayout>

@@ -10,5 +10,6 @@ import eu.nanooq.otkd.models.UI.SectionItem
 interface IRunnerSectionDetailView : IView {
     fun setupMap(item: SectionItem)
     fun setupRunner(item: SectionItem)
+    fun startTrackDetail(sectionId: Int)
 
 }

@@ -32,10 +32,20 @@
     <string name="bottom_menu_results">Výsledky</string>
     <string name="bottom_menu_profile">Profil</string>
     <string name="sections_toolbar_title">ÚSEKY</string>
+    <string name="results_toolbar_title">VÝSLEDKY</string>
     <string name="logoff">Odhlasiť sa</string>
     <string name="detail_trasy_a_poradie">Detail trasy a poradie</string>
     <string name="length_label">dĺžka</string>
     <string name="high_label">stúpanie</string>
     <string name="obtiaznost">obtiažnosť</string>
     <string name="section_down_label">klesanie</string>
+    <string name="sections_label">úsekov</string>
+    <string name="started_label">odštartovalo</string>
+    <string name="results_length">km</string>
+    <string name="results_finished">v cieli</string>
+    <string name="standing">Poradie</string>
+    <string name="team_name">Názov tímu</string>
+    <string name="time">Čas</string>
+    <string name="standing_in_category">Por. v kat.</string>
+    <string name="complete_time">Celkový čas</string>
 </resources>

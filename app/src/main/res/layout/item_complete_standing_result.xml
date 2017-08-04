@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_complete_standing_result"
+    android:layout_width="match_parent"
+    android:layout_height="62dp"
+    android:background="@color/colorPrimaryDark"
+    >
+
+    <TextView
+        android:id="@+id/vStandingValue"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="16sp"
+        app:layout_widthPercent="14%"
+        tools:text="1."
+        />
+
+    <TextView
+        android:id="@+id/vTeamName"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/vStandingValue"
+        android:ellipsize="marquee"
+        android:maxLines="2"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="16sp"
+        app:layout_widthPercent="40%"
+        tools:text="IT Girls from Papua new Guinea"
+        />
+
+    <TextView
+        android:id="@+id/vTeamTime"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/vTeamName"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="16sp"
+        app:layout_widthPercent="20%"
+        tools:text="12:32:53"
+        />
+
+    <TextView
+        android:id="@+id/vCategoryStanding"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/vTeamTime"
+        android:gravity="center"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="16sp"
+        app:layout_widthPercent="10%"
+        tools:text="136."
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_width"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        />
+
+</android.support.percent.PercentRelativeLayout>
