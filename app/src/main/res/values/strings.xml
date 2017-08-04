@@ -43,4 +43,9 @@
     <string name="started_label">odštartovalo</string>
     <string name="results_length">km</string>
     <string name="results_finished">v cieli</string>
+    <string name="standing">Poradie</string>
+    <string name="team_name">Názov tímu</string>
+    <string name="time">Čas</string>
+    <string name="standing_in_category">Por. v kat.</string>
+    <string name="complete_time">Celkový čas</string>
 </resources>

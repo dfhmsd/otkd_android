@@ -39,8 +39,13 @@ class ResultPerSectionViewModel : BaseViewModel<IResultPerSectionView>() {
             loadResults(user)
 
         }
+    }
 
+    override fun onDestroy() {
+        Timber.d("onDestroy()")
+        mDisposable?.dispose()
 
+        super.onDestroy()
     }
 
     private fun loadResults(user: User) {

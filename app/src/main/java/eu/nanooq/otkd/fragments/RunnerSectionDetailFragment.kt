@@ -1,5 +1,6 @@
 package eu.nanooq.otkd.fragments
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.data.geojson.GeoJsonLayer
 import com.google.maps.android.data.geojson.GeoJsonLineString
 import eu.nanooq.otkd.R
+import eu.nanooq.otkd.activities.TrackDetailActivity
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
 import eu.nanooq.otkd.models.UI.SectionItem
@@ -97,6 +99,14 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
         mMapView?.onResume()
 
         viewModel.getData()
+
+        vDetailAndResults.setOnClickListener { viewModel.openTrackDetail() }
+    }
+
+    override fun startTrackDetail(sectionId: Int) {
+        val trackDetailIntent = Intent(context, TrackDetailActivity::class.java)
+        trackDetailIntent.putExtra("sectionId", sectionId)
+        context.startActivity(trackDetailIntent)
     }
 
     private fun addSectionLineOverlay(sectionId: Int) {

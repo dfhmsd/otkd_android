@@ -14,7 +14,7 @@ import eu.nanooq.otkd.fragments.ResultsPerSectionFragment
 class ResultsPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
 
-    val tabs: MutableList<String> = mutableListOf(ResultsFragment.PER_SECTIONS, ResultsFragment.STANDINGS)
+    val tabs: MutableList<String> = mutableListOf(ResultsFragment.STANDINGS, ResultsFragment.PER_SECTIONS)
 
     override fun getItem(position: Int): Fragment {
         return if (tabs[position] == ResultsFragment.PER_SECTIONS) {
