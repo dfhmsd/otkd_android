@@ -6,16 +6,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 
 import com.google.gson.Gson
 import eu.nanooq.otkd.R
 import eu.nanooq.otkd.activities.SectionDetailActivity
 import eu.nanooq.otkd.adapters.ChatRecAdapter
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
-import eu.nanooq.otkd.helpers.PreferencesHelper
 import eu.nanooq.otkd.inflate
-import eu.nanooq.otkd.models.API.Message
 import eu.nanooq.otkd.models.UI.MessageItem
 import eu.nanooq.otkd.viewModels.IActivityToolbar
 import eu.nanooq.otkd.viewModels.chat.ChatViewModel

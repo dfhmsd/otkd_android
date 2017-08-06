@@ -29,6 +29,7 @@
                 android:id="@+id/vMyMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/primaryTextColor"
                 android:ems="10"
                 android:inputType="textPersonName" />
 
@@ -36,7 +37,7 @@
                 android:id="@+id/vSendButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Send" />
+                android:text="@string/label_chat_send" />
         </LinearLayout>
 
 

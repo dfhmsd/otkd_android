@@ -17,6 +17,8 @@
     <string name="label_runner_team_name">Názov tímu</string>
     <string name="label_runner_terms">Prihlásením súhlasíte so všeobecnými podmienkami používania aplikácie.</string>
     <string name="label_runner_login">prihlásit sa</string>
+
+    <string name="label_chat_send">Odoslať</string>
     <!--font path-->
     <string name="opensans_font_path">fonts/OpenSans-Regular.ttf</string>
     <string name="opensans_semibold_font_path">fonts/OpenSans-Semibold.ttf</string>

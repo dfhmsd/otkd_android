@@ -1,12 +1,15 @@
 package eu.nanooq.otkd.viewModels.chat
 
 import android.os.Bundle
+import com.androidhuman.rxfirebase2.database.data
 import com.androidhuman.rxfirebase2.database.dataChanges
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.GenericTypeIndicator
+import com.google.firebase.database.ValueEventListener
 
 import eu.nanooq.otkd.helpers.FirebaseHelper
-import eu.nanooq.otkd.models.API.Message
-import eu.nanooq.otkd.models.API.User
+import eu.nanooq.otkd.models.API.*
 import eu.nanooq.otkd.models.UI.MessageItem
 import eu.nanooq.otkd.toBase64
 import eu.nanooq.otkd.viewModels.base.BaseViewModel
@@ -18,6 +21,7 @@ import io.reactivex.rxkotlin.toFlowable
 import timber.log.Timber
 
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by jvolp on 04.08.2017.
@@ -26,6 +30,7 @@ import java.util.*
 class ChatViewModel : BaseViewModel<ChatView>() {
 
     var mDisposable: Disposable? = null
+    var teamMembers: ArrayList<Member>?= null
 
     private lateinit var messagesFlowable: Flowable<ArrayList<Message>>
 
@@ -66,7 +71,7 @@ class ChatViewModel : BaseViewModel<ChatView>() {
         Timber.i("loadUserData() ${user.team_name}")
 
 
-        val messagesObservable = mFirebaseHelper.mFBDBReference
+        messagesFlowable = mFirebaseHelper.mFBDBReference
                 .child(FirebaseHelper.CHAT)
                 .child(user.team_name.toBase64())
                 .child(FirebaseHelper.MESSAGES)
@@ -97,36 +102,58 @@ class ChatViewModel : BaseViewModel<ChatView>() {
                 }
                 .toFlowable(BackpressureStrategy.LATEST)
 
-        val obsList = listOf(messagesObservable)
-        obsList.toFlowable()
+        val teamFlowable = mFirebaseHelper.mFBDBReference
+                .child(FirebaseHelper.TEAM_MEMBERS)
+                .child(user.team_name.toBase64())
+                .child(FirebaseHelper.MEMBERS)
+                .dataChanges()
+                .map {
+                    Timber.d("teamObservable map() $it")
+                    var array = ArrayList<Member>()
+                    try {
+                        val typeList = object : GenericTypeIndicator<HashMap<String, Member>>() {}
+                        val team = it.getValue(typeList)
+                        team?.forEach {
+                            array.add(it.value)
+                        }
+
+                    } catch (exc: Exception) {
+                        val typeList = object : GenericTypeIndicator<ArrayList<Member>>() {}
+                        array = it.getValue(typeList) ?: ArrayList()
+
+                    }
+
+                    array
+                }
+                .toFlowable(BackpressureStrategy.LATEST)
+
+        teamFlowable.subscribe({
+            teamMembers = it
+        })
 
 
-        // mDisposable = Flowable. combineLatest(messagesObservable, ArrayList<MessageItem> { messages ->
-        mDisposable = messagesObservable.subscribe({
+
+        mDisposable = messagesFlowable.subscribe({
             Timber.d("Chat subscribe ${it}it")
-
             val messages = it
             val messageItems = ArrayList<MessageItem>()
 
             messages.forEach {
                 val messageItem = MessageItem()
                 with(messageItem) {
-                    //val messageId = it.id ?: 0
-                   //Id = messageId
                     captain = it.captain?: false
                     sender = it.sender?: ""
                     text = it.text?: ""
                     timestamp = (it.timestamp * 1000).toLong()
                 }
 
-
                 val date = Date((it.timestamp*1000).toLong())
                 Timber.d("MessageTimestamp::${it.timestamp}:::${date}")
                 messageItems.add(messageItem)
             }
-            Timber.d("MessageArray: ${messageItems}")
+
             messageItems.sortBy { it.timestamp }
-            Timber.d("MessageArray2: ${messageItems}")
+
             view?.updateAdapter(messageItems)
 
         }, {
@@ -134,26 +161,43 @@ class ChatViewModel : BaseViewModel<ChatView>() {
         }, {
             Timber.e("onComplete()")
         })
-
-
     }
+
+
+    fun getCaptainDetails(): Member? {
+        teamMembers?.forEach {
+            if (it.is_captain) {
+                return it
+            }
+        }
+        return null
+    }
+
 
     fun  sendMessage(message: String) {
         val user = mPreferencesHelper.getUser()
         val keyMessaging = user?.team_name.toBase64()
         val keyMessage = mFirebaseHelper.mFBDBReference.child("posts").push().getKey()
-
+        val name: String
+        if (user is UserCaptain) {
+            val captain = getCaptainDetails()
+            name = captain?.first_name + " " + captain?.last_name
+        } else {
+            val member = user as UserRunner
+            name = member.first_name + " " + member.last_name
+        }
 
 
         val messageToSave = Message()
                 with(messageToSave) {
-                    captain = false
+                    captain = user is UserCaptain
                     text = message
                     timestamp = (Date().time).toDouble()
-                    sender = "Ivo"
-                    sender_id = "abc"
+                    sender = name
+                    sender_id = name.toBase64()
                 }
 
+        Timber.d("MESS TO SEND: ${messageToSave.sender}")
         mFirebaseHelper.mFBDBReference
                 .child(FirebaseHelper.CHAT)
                 .child(keyMessaging)
