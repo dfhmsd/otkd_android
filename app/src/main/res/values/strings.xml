@@ -32,6 +32,7 @@
     <string name="bottom_menu_results">Výsledky</string>
     <string name="bottom_menu_profile">Profil</string>
     <string name="sections_toolbar_title">ÚSEKY</string>
+    <string name="chat_toolbar_title">CHAT</string>
     <string name="results_toolbar_title">VÝSLEDKY</string>
     <string name="logoff">Odhlasiť sa</string>
     <string name="detail_trasy_a_poradie">Detail trasy a poradie</string>
