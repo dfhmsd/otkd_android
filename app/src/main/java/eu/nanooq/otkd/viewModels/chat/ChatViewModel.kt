@@ -179,14 +179,17 @@ class ChatViewModel : BaseViewModel<ChatView>() {
         val keyMessaging = user?.team_name.toBase64()
         val keyMessage = mFirebaseHelper.mFBDBReference.child("posts").push().getKey()
         val name: String
+        val senderId: String
         if (user is UserCaptain) {
             val captain = getCaptainDetails()
             name = captain?.first_name + " " + captain?.last_name
+            senderId = user.email.toBase64().toString()
         } else {
             val member = user as UserRunner
             name = member.first_name + " " + member.last_name
+            senderId = (user.team_name + " " + member.first_name + " " + member.last_name)
+                    .toBase64().toString()
         }
-
 
         val messageToSave = Message()
                 with(messageToSave) {
@@ -194,7 +197,7 @@ class ChatViewModel : BaseViewModel<ChatView>() {
                     text = message
                     timestamp = (Date().time).toDouble()
                     sender = name
-                    sender_id = name.toBase64()
+                    sender_id = senderId
                 }
 
         Timber.d("MESS TO SEND: ${messageToSave.sender}")
