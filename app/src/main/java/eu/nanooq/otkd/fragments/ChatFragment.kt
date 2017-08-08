@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.google.gson.Gson
 import eu.nanooq.otkd.R
-import eu.nanooq.otkd.activities.SectionDetailActivity
 import eu.nanooq.otkd.adapters.ChatRecAdapter
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
@@ -41,16 +39,8 @@ class ChatFragment : ViewModelFragment<ChatView, ChatViewModel>(), ChatView {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = container?.inflate(R.layout.fragment_chat)
 
-        mAdapter = ChatRecAdapter(ArrayList(), context) {
-            onDetailItemClick(it)
-        }
+        mAdapter = ChatRecAdapter(ArrayList(), context)
         return view
-    }
-
-    private fun onDetailItemClick(messageItem: MessageItem) {
-        val intent = Intent(context, SectionDetailActivity::class.java)
-        intent.putExtra("item", Gson().toJson(messageItem))
-        startActivity(intent)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
