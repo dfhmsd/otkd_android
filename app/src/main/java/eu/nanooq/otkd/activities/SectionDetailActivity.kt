@@ -12,20 +12,28 @@ import eu.nanooq.otkd.viewModels.sectionDetail.SectionDetailViewModel
 import kotlinx.android.synthetic.main.activity_section_detail.*
 import timber.log.Timber
 
+
 /**
  *
  * Created by rd on 31/07/2017.
  */
 class SectionDetailActivity : ViewModelActivity<ISectionDetailView, SectionDetailViewModel>(), IActivityToolbar {
 
+    lateinit var sectionItemJson: String
+    val ITEM: String = "item"
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_section_detail)
 
         setupToolbar()
-
-        val sectionItemJson = intent.getStringExtra("item")
+        val json = intent.getStringExtra(ITEM)
+        json?.run {
+            sectionItemJson = json
+        }
+        if (savedInstanceState != null) {
+            sectionItemJson = savedInstanceState.getString(ITEM)
+        }
 
         vDetailsPager.adapter = SectionDetailPagerAdapter(sectionItemJson, supportFragmentManager)
         vDetailsTabs.setupWithViewPager(vDetailsPager)
@@ -33,6 +41,8 @@ class SectionDetailActivity : ViewModelActivity<ISectionDetailView, SectionDetai
     }
 
     private fun setupToolbar() {
+        Timber.d("onCreate()")
+
         val toolbar: Toolbar = mToolbar as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -42,6 +52,22 @@ class SectionDetailActivity : ViewModelActivity<ISectionDetailView, SectionDetai
     }
 
     override fun onToolbarTitleChange(title: String) {
+        Timber.d("onCreate()")
+
         supportActionBar?.title = title
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Timber.d("onSaveInstanceState()")
+
+        outState.putString(ITEM, sectionItemJson)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        Timber.d("onRestoreInstanceState()")
+
+        super.onRestoreInstanceState(savedInstanceState)
+
     }
 }

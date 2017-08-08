@@ -29,101 +29,11 @@
             />
 
         <TextView
-            android:id="@+id/best_time_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sep"
-            android:layout_margin="20dp"
-            android:text="@string/best_time_label"
-            android:textColor="@color/secondaryTextColor"
-            android:textSize="18sp"
-
-            />
-
-        <TextView
-            android:id="@+id/vBestTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/sep"
-            android:layout_margin="20dp"
-            android:layout_toEndOf="@+id/best_time_label"
-            android:gravity="end"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="18sp"
-            tools:text="12:34:52"
-            />
-
-        <View
-            android:id="@+id/sep1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator_width"
-            android:layout_below="@+id/vBestTime"
-            android:background="@color/colorPrimary"
-            />
-
-        <TextView
-            android:id="@+id/final_team_standing_label"
-            style="@style/UserDetail.Label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sep1"
-            android:text="@string/final_team_standing_label"
-
-            />
-
-        <TextView
-            android:id="@+id/vFinalTeamStanding"
-            style="@style/UserDetail.Value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sep1"
-            android:layout_toEndOf="@+id/final_team_standing_label"
-            tools:text="12:34:52"
-            />
-
-        <View
-            android:id="@+id/sep2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator_width"
-            android:layout_below="@+id/vFinalTeamStanding"
-            android:background="@color/colorPrimary"
-            />
-
-        <TextView
-            android:id="@+id/final_standing_in_category_label"
-            style="@style/UserDetail.Label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sep2"
-            android:text="@string/final_standing_in_category"
-
-            />
-
-        <TextView
-            android:id="@+id/vFinalStandingInCategory"
-            style="@style/UserDetail.Value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sep2"
-            android:layout_toEndOf="@+id/final_standing_in_category_label"
-            tools:text="12:34:52"
-            />
-
-        <View
-            android:id="@+id/sep3"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator_width"
-            android:layout_below="@+id/vFinalStandingInCategory"
-            android:background="@color/colorPrimary"
-            />
-
-        <TextView
             android:id="@+id/standing_on_section_label"
             style="@style/UserDetail.Label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sep3"
+            android:layout_below="@+id/sep"
             android:text="@string/standing_on_section_label"
 
             />
@@ -133,8 +43,123 @@
             style="@style/UserDetail.Value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sep3"
+            android:layout_below="@+id/sep"
             android:layout_toEndOf="@+id/standing_on_section_label"
+            tools:text="12:34:52"
+            />
+
+        <View
+            android:id="@+id/sep1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_width"
+            android:layout_below="@+id/vStandingOnSection"
+            android:background="@color/colorPrimary"
+            />
+
+        <TextView
+            android:id="@+id/team_result_label"
+            style="@style/UserDetail.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sep1"
+            android:text="@string/final_team_standing_label"
+
+            />
+
+        <TextView
+            android:id="@+id/vTeamResult"
+            style="@style/UserDetail.Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sep1"
+            android:layout_toEndOf="@+id/team_result_label"
+            tools:text="12:34:52"
+            />
+
+        <View
+            android:id="@+id/separ"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_width"
+
+            android:layout_below="@+id/vTeamResult"
+            android:background="@color/colorPrimary"
+            />
+
+        <TextView
+            android:id="@+id/team_standing_in_category_label"
+            style="@style/UserDetail.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/separ"
+            android:text="@string/final_standing_in_category"
+            />
+
+        <TextView
+            android:id="@+id/vTeamResultInCategory"
+            style="@style/UserDetail.Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/separ"
+            android:layout_toEndOf="@+id/team_standing_in_category_label"
+            tools:text="12:34:52"
+            />
+
+
+        <View
+            android:id="@+id/sep2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_width"
+
+            android:layout_below="@+id/vTeamResultInCategory"
+            android:background="@color/colorPrimary"
+            />
+
+        <TextView
+            android:id="@+id/time_at_finish_label"
+            style="@style/UserDetail.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sep2"
+            android:text="@string/time_at_finish_label"
+
+            />
+
+        <TextView
+            android:id="@+id/vTimeAtFinish"
+            style="@style/UserDetail.Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sep2"
+            android:layout_toEndOf="@+id/time_at_finish_label"
+            tools:text="12:34:52"
+            />
+
+        <View
+            android:id="@+id/sep3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_width"
+
+            android:layout_below="@+id/vTimeAtFinish"
+            android:background="@color/colorPrimary"
+            />
+
+        <TextView
+            android:id="@+id/real_time_label"
+            style="@style/UserDetail.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sep3"
+            android:text="@string/real_time_label"
+
+            />
+
+        <TextView
+            android:id="@+id/vRealTime"
+            style="@style/UserDetail.Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sep3"
+            android:layout_toEndOf="@+id/real_time_label"
             tools:text="12:34:52"
             />
 
@@ -142,7 +167,8 @@
             android:id="@+id/sep4"
             android:layout_width="match_parent"
             android:layout_height="@dimen/separator_width"
-            android:layout_below="@+id/vStandingOnSection"
+
+            android:layout_below="@+id/vRealTime"
             android:background="@color/colorPrimary"
             />
 
@@ -170,27 +196,37 @@
             android:id="@+id/sep5"
             android:layout_width="match_parent"
             android:layout_height="@dimen/separator_width"
+
             android:layout_below="@+id/vExpectedTime"
             android:background="@color/colorPrimary"
             />
 
+
         <TextView
-            android:id="@+id/real_time_label"
-            style="@style/UserDetail.Label"
+            android:id="@+id/best_time_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/sep5"
-            android:text="@string/real_time_label"
+            android:layout_margin="20dp"
+            android:text="@string/best_time_label"
+
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="18sp"
 
             />
 
+
         <TextView
-            android:id="@+id/vRealTime"
-            style="@style/UserDetail.Value"
+            android:id="@+id/vBestTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/sep5"
-            android:layout_toEndOf="@+id/real_time_label"
+            android:layout_margin="20dp"
+            android:layout_toEndOf="@+id/best_time_label"
+            android:gravity="end"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp"
             tools:text="12:34:52"
             />
 
@@ -198,7 +234,8 @@
             android:id="@+id/sep6"
             android:layout_width="match_parent"
             android:layout_height="@dimen/separator_width"
-            android:layout_below="@+id/vRealTime"
+
+            android:layout_below="@+id/vBestTime"
             android:background="@color/colorPrimary"
             />
 
@@ -226,35 +263,8 @@
             android:id="@+id/sep7"
             android:layout_width="match_parent"
             android:layout_height="@dimen/separator_width"
+
             android:layout_below="@+id/vWorstTime"
-            android:background="@color/colorPrimary"
-            />
-
-        <TextView
-            android:id="@+id/time_at_finish_label"
-            style="@style/UserDetail.Label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sep7"
-            android:text="@string/time_at_finish_label"
-
-            />
-
-        <TextView
-            android:id="@+id/vTimeAtFinish"
-            style="@style/UserDetail.Value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sep7"
-            android:layout_toEndOf="@+id/time_at_finish_label"
-            tools:text="12:34:52"
-            />
-
-        <View
-            android:id="@+id/sep8"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator_width"
-            android:layout_below="@+id/vTimeAtFinish"
             android:background="@color/colorPrimary"
             />
 
@@ -263,7 +273,7 @@
             style="@style/UserDetail.Label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sep8"
+            android:layout_below="@+id/sep7"
             android:text="@string/team_time_label"
 
             />
@@ -273,9 +283,18 @@
             style="@style/UserDetail.Value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sep8"
+            android:layout_below="@+id/sep7"
             android:layout_toEndOf="@+id/team_time_label"
             tools:text="12:34:52"
+            />
+
+        <View
+            android:id="@+id/sep8"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_width"
+
+            android:layout_below="@+id/vTeamTime"
+            android:background="@color/colorPrimary"
             />
 
     </android.support.percent.PercentRelativeLayout>

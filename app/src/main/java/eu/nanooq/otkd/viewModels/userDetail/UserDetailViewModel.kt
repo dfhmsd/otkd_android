@@ -58,11 +58,12 @@ class UserDetailViewModel : BaseViewModel<IUserDetailView>() {
 
                             val teamResult = results.firstOrNull { it.team_name == mUser?.team_name }
                             val sectionTeamResult = teamResult?.sections?.firstOrNull { it.section_id == mSectionId }
+                            view?.setToolbarTitle("${sectionTeamResult?.section_name}")
                             val detailItem = UserDetailItem().apply {
                                 mBestTime = sectionTeamResult?.best_time.formatTimeInMinutes()
-                                mTeamStanding = "${teamResult?.final_result}"
-                                mStandingInCategory = "${teamResult?.final_result_in_category}"
-                                mStandingInSection = "${sectionTeamResult?.result_on_section}"
+                                mTeamStanding = "${teamResult?.final_result}."
+                                mStandingInCategory = "${teamResult?.final_result_in_category}."
+                                mStandingInSection = "${sectionTeamResult?.result_on_section}."
                                 mExpectedTime = sectionTeamResult?.estimated_time.formatTimeInMinutes()
                                 mRealTime = sectionTeamResult?.real_time.formatTimeInMinutes()
                                 mWorstTime = sectionTeamResult?.worst_time.formatTimeInMinutes()

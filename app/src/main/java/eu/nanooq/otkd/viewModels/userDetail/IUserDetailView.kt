@@ -9,5 +9,6 @@ import eu.nanooq.otkd.models.UI.UserDetailItem
  */
 interface IUserDetailView : IView {
     fun updateData(userDetail: UserDetailItem)
+    fun setToolbarTitle(title: String)
 
 }

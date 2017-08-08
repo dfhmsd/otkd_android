@@ -57,4 +57,5 @@
     <string name="worst_time_label">Najhorší čas</string>
     <string name="time_at_finish_label">Čas preběhnutia</string>
     <string name="team_time_label">Celkový čas tímu</string>
+    <string name="category_label">Kategoria</string>
 </resources>

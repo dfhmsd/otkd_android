@@ -1,6 +1,8 @@
 package eu.nanooq.otkd.activities
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.Toolbar
 import eu.nanooq.otkd.R
 import eu.nanooq.otkd.activities.base.ViewModelActivity
 import eu.nanooq.otkd.models.UI.UserDetailItem
@@ -20,17 +22,31 @@ class UserDetailActivity : ViewModelActivity<IUserDetailView, UserDetailViewMode
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_detail)
 
+        setupToolbar()
     }
 
     override fun updateData(userDetail: UserDetailItem) {
         vBestTime.text = userDetail.mBestTime
-        vFinalTeamStanding.text = userDetail.mTeamStanding
-        vFinalStandingInCategory.text = userDetail.mStandingInCategory
+        vTeamResult.text = userDetail.mTeamStanding
+        vTeamResultInCategory.text = userDetail.mStandingInCategory
         vStandingOnSection.text = userDetail.mStandingInSection
         vExpectedTime.text = userDetail.mExpectedTime
         vRealTime.text = userDetail.mRealTime
         vWorstTime.text = userDetail.mWorstTime
         vTimeAtFinish.text = userDetail.mTimeAtFinish
         vTeamTime.text = userDetail.mTeamTime
+    }
+
+    override fun setToolbarTitle(title: String) {
+        supportActionBar?.title = title
+    }
+
+    private fun setupToolbar() {
+        val toolbar: Toolbar = mToolbar as Toolbar
+        setSupportActionBar(toolbar)
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+        supportActionBar?.title = ""
     }
 }
