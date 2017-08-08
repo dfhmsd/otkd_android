@@ -32,4 +32,8 @@ class RunnerSectionDetailVievModel : BaseViewModel<IRunnerSectionDetailView>() {
         view?.startTrackDetail(sectionItem.Id)
     }
 
+    fun openUserDetail() {
+        view?.startUserDetail(sectionItem.Id)
+    }
+
 }

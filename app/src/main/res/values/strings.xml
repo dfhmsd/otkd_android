@@ -48,4 +48,13 @@
     <string name="time">Čas</string>
     <string name="standing_in_category">Por. v kat.</string>
     <string name="complete_time">Celkový čas</string>
+    <string name="best_time_label">Najlepší čas</string>
+    <string name="final_team_standing_label">Celkové poradie tímu</string>
+    <string name="final_standing_in_category">Celkové poradie v kategorii</string>
+    <string name="standing_on_section_label">Poradie na úseku</string>
+    <string name="expected_time_label">Odhadovaný čas</string>
+    <string name="real_time_label">Realný čas</string>
+    <string name="worst_time_label">Najhorší čas</string>
+    <string name="time_at_finish_label">Čas preběhnutia</string>
+    <string name="team_time_label">Celkový čas tímu</string>
 </resources>

@@ -22,6 +22,7 @@ import com.google.maps.android.data.geojson.GeoJsonLayer
 import com.google.maps.android.data.geojson.GeoJsonLineString
 import eu.nanooq.otkd.R
 import eu.nanooq.otkd.activities.TrackDetailActivity
+import eu.nanooq.otkd.activities.UserDetailActivity
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
 import eu.nanooq.otkd.models.UI.SectionItem
@@ -101,12 +102,20 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
         viewModel.getData()
 
         vDetailAndResults.setOnClickListener { viewModel.openTrackDetail() }
+
+        vUsersection.setOnClickListener { viewModel.openUserDetail() }
     }
 
     override fun startTrackDetail(sectionId: Int) {
         val trackDetailIntent = Intent(context, TrackDetailActivity::class.java)
         trackDetailIntent.putExtra("sectionId", sectionId)
         context.startActivity(trackDetailIntent)
+    }
+
+    override fun startUserDetail(sectionId: Int) {
+        val userDetailIntent = Intent(context, UserDetailActivity::class.java)
+        userDetailIntent.putExtra("sectionId", sectionId)
+        context.startActivity(userDetailIntent)
     }
 
     private fun addSectionLineOverlay(sectionId: Int) {

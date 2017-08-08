@@ -77,5 +77,19 @@
         <item name="android:layout_marginBottom">12dp</item>
     </style>
 
+    <style name="UserDetail.Label" parent="TextAppearance.AppCompat">
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="UserDetail.Value" parent="TextAppearance.AppCompat">
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:gravity">end</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+
+    </style>
 
 </resources>

@@ -11,5 +11,6 @@ interface IRunnerSectionDetailView : IView {
     fun setupMap(item: SectionItem)
     fun setupRunner(item: SectionItem)
     fun startTrackDetail(sectionId: Int)
+    fun startUserDetail(sectionId: Int)
 
 }
