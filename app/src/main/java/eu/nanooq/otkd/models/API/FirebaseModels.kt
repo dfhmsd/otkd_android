@@ -16,6 +16,7 @@ data class Section(
         var km: Float? = null,
         var route_profile: String? = null,
         var section_name: String? = null
+
 ) {
 
 }
@@ -61,4 +62,12 @@ data class TeamSectionResult(
         var section_name: String? = "",
         var time_when_run: String? = "",
         var worst_time: Float? = 0.0f
+)
+
+data class Message(
+        var captain: Boolean? = false,
+        var sender: String? = "",
+        var sender_id: String? = "",
+        var text: String? = "",
+        var timestamp: Double = 0.0
 )

@@ -21,5 +21,4 @@ data class UserRunner(
 
 interface User {
     var team_name: String
-
 }
