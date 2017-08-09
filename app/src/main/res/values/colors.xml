@@ -10,5 +10,6 @@
     <color name="secondaryTextColor">#A7AAC6</color>
     <color name="white">@android:color/white</color>
     <color name="semiTransparent">#a8000000</color>
+    <color name="yourMessage">#606489</color>
 
 </resources>

@@ -11,8 +11,10 @@ import eu.nanooq.otkd.models.UI.SectionResult
 import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 /**
@@ -41,10 +43,14 @@ class ResultPerSectionViewModel : BaseViewModel<IResultPerSectionView>() {
         }
     }
 
+    override fun onStop() {
+        Timber.d("onStop()")
+        super.onStop()
+        mDisposable?.dispose()
+    }
+
     override fun onDestroy() {
         Timber.d("onDestroy()")
-        mDisposable?.dispose()
-
         super.onDestroy()
     }
 
@@ -89,12 +95,15 @@ class ResultPerSectionViewModel : BaseViewModel<IResultPerSectionView>() {
                     sectionsResults.sortBy { it.mSectionId }
                     sectionsResults
                 })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe({
                     Timber.d("onNext() $it")
                     view?.updateAdapter(it)
                 }, {
                     Timber.e("onError() ${it.message}")
                 })
+
     }
 
     private val sectionsFlowable by lazy {

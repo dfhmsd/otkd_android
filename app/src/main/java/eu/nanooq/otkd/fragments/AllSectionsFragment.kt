@@ -68,7 +68,7 @@ class AllSectionsFragment : ViewModelFragment<IAllSectionsView, AllSectionsViewM
     }
 
     override fun updateAdapter(newItems: ArrayList<SectionItem>) {
-        Timber.d("updateAdapter() $newItems")
+        Timber.d("updateAdapter() $newItems $mAdapter ${vAllSectionsRecView.id}")
         vSectionsCount.text = "${newItems.size} úsekov"
 
         mAdapter.addItems(newItems)

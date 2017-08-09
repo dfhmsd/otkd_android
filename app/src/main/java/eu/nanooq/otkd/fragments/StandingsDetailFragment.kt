@@ -10,7 +10,6 @@ import eu.nanooq.otkd.adapters.SectionStandingsRecAdapter
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
 import eu.nanooq.otkd.models.UI.ItemType
-import eu.nanooq.otkd.viewModels.IActivityToolbar
 import eu.nanooq.otkd.viewModels.sectionDetail.IStandingsDetailView
 import eu.nanooq.otkd.viewModels.sectionDetail.StandingDetailViewModel
 import kotlinx.android.synthetic.main.fragment_standings_detail.*
@@ -67,7 +66,7 @@ class StandingsDetailFragment : ViewModelFragment<IStandingsDetailView, Standing
     }
 
     override fun setToolbarTitle(title: String) {
-        val activity = activity as IActivityToolbar
-        activity.onToolbarTitleChange(title)
+//        val activity = activity as IActivityToolbar
+//        activity.onToolbarTitleChange(title)
     }
 }

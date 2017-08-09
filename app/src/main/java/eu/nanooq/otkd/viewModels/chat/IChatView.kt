@@ -7,7 +7,7 @@ import eu.nanooq.otkd.models.UI.MessageItem
  *
  * Created by rd on 28/07/2017.
  */
-interface ChatView : IView {
-    fun  updateAdapter(it: ArrayList<MessageItem>)
+interface IChatView : IView {
+    fun updateAdapter(newItems: ArrayList<MessageItem>)
 
 }

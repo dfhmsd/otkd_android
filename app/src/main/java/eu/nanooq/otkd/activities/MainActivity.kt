@@ -1,11 +1,14 @@
 package eu.nanooq.otkd.activities
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
 import eu.nanooq.otkd.R
+import eu.nanooq.otkd.R.id.*
 import eu.nanooq.otkd.activities.base.ViewModelActivity
 import eu.nanooq.otkd.adapters.MainPagerAdapter
+import eu.nanooq.otkd.fragments.SectionsFragment
 import eu.nanooq.otkd.viewModels.IActivityToolbar
 import eu.nanooq.otkd.viewModels.main.IMainView
 import eu.nanooq.otkd.viewModels.main.MainViewModel
@@ -20,13 +23,13 @@ class MainActivity : ViewModelActivity<IMainView, MainViewModel>(), IMainView, I
 
     companion object {
         val FRAGMENT_SECTIONS_TAG = "fragment_sections"
-        val FRAGMENT_TEAM_TAG = "fragment_team"
+        //        val FRAGMENT_TEAM_TAG = "fragment_team"
         val FRAGMENT_CHAT_TAG = "fragment_chat"
         val FRAGMENT_RESULTS_TAG = "fragment_results"
         val FRAGMENT_PROFILE_TAG = "fragment_user_profile"
         val FRAGMENT_TAGS: MutableList<String> = mutableListOf(
                 FRAGMENT_SECTIONS_TAG,
-                FRAGMENT_TEAM_TAG,
+                //                FRAGMENT_TEAM_TAG,
                 FRAGMENT_CHAT_TAG,
                 FRAGMENT_RESULTS_TAG,
                 FRAGMENT_PROFILE_TAG)
@@ -49,37 +52,43 @@ class MainActivity : ViewModelActivity<IMainView, MainViewModel>(), IMainView, I
 
         mAdapter = MainPagerAdapter(supportFragmentManager)
         vMainContentPager.adapter = mAdapter
+        vMainContentPager.offscreenPageLimit = 1
 //        vMainContentPager.setOnTouchListener { _, _ ->
 //            true
 //        }
 
 
-        replaceContent(FRAGMENT_SECTIONS_TAG)
+        val sectionsFrag = SectionsFragment.newInstance()
+//        val teamFrag = TeamFragment.newInstance()
+//        val chatFrag = ChatFragment.newInstance()
+//        val resultsFrag = ResultsFragment.newInstance()
+//        val userProfile = UserProfileFragment.newInstance()
+        replaceContent(sectionsFrag, FRAGMENT_SECTIONS_TAG)
 
         vMainNavigation?.setOnTabSelectListener {
             Timber.d("onMainNavigationClick() $it")
 
             when (it) {
-                R.id.action_sections -> {
-                    replaceContent(FRAGMENT_SECTIONS_TAG)
+                action_sections -> {
+                    replaceContent(sectionsFrag, FRAGMENT_SECTIONS_TAG)
                 }
-                R.id.action_team -> {
-                    replaceContent(FRAGMENT_TEAM_TAG)
+//                R.id.action_team -> {
+//                    replaceContent(teamFrag, FRAGMENT_TEAM_TAG)
+//                }
+                action_chat -> {
+                    replaceContent(sectionsFrag, FRAGMENT_CHAT_TAG)
                 }
-                R.id.action_chat -> {
-                    replaceContent(FRAGMENT_CHAT_TAG)
+                action_results -> {
+                    replaceContent(sectionsFrag, FRAGMENT_RESULTS_TAG)
                 }
-                R.id.action_results -> {
-                    replaceContent(FRAGMENT_RESULTS_TAG)
-                }
-                R.id.action_profile -> {
-                    replaceContent(FRAGMENT_PROFILE_TAG)
+                action_profile -> {
+                    replaceContent(sectionsFrag, FRAGMENT_PROFILE_TAG)
                 }
             }
         }
     }
 
-    private fun replaceContent(tag: String) {
+    private fun replaceContent(fragment: Fragment, tag: String) {
         Timber.d("replaceContent() $tag")
 //        supportFragmentManager.beginTransaction()
 //                .replace(R.id.vMainContent, fragment)

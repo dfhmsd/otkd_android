@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/vFragmentChat"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vAllMessagesRecView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/vSenderArea"
+        >
+
+    </android.support.v7.widget.RecyclerView>
 
     <LinearLayout
-        android:id="@+id/vFragmentChat"
+        android:id="@+id/vSenderArea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
-        android:orientation="vertical">
+        android:layout_alignParentBottom="true"
+        >
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/vAllMessagesRecView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </android.support.v7.widget.RecyclerView>
-
-        <LinearLayout
-            android:id="@+id/vSenderArea"
+        <EditText
+            android:id="@+id/vMyMessage"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:textColor="@color/primaryTextColor"/>
 
-
-            <EditText
-                android:id="@+id/vMyMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/primaryTextColor"
-                android:ems="10"
-                android:inputType="textMultiLine"
-                android:maxLines="4"/>
-
-            <Button
-                android:id="@+id/vSendButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/label_chat_send" />
-        </LinearLayout>
-
-
-
+        <Button
+            android:id="@+id/vSendButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:text="@string/label_chat_send"
+            android:textColor="@color/secondaryAccent"/>
     </LinearLayout>
 
-</android.support.v4.widget.NestedScrollView>
+
+</android.support.percent.PercentRelativeLayout>
+

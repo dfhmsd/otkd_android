@@ -12,9 +12,11 @@ import eu.nanooq.otkd.toBase64
 import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.rxkotlin.toFlowable
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 
@@ -48,6 +50,7 @@ class AllSectionsViewModel : BaseViewModel<IAllSectionsView>() {
     override fun onStop() {
         Timber.d("onStop()")
         super.onStop()
+
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -59,6 +62,7 @@ class AllSectionsViewModel : BaseViewModel<IAllSectionsView>() {
         Timber.d("onDestroy()")
         super.onDestroy()
         mDisposable?.dispose()
+
     }
 
     private fun loadUserData(user: User) {
@@ -133,8 +137,10 @@ class AllSectionsViewModel : BaseViewModel<IAllSectionsView>() {
 
             sectionItems.sortBy { it.Id }
             sectionItems
-        }).subscribe({
-            Timber.d("nice combinelatest ${it}it")
+        })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
             view?.updateAdapter(it)
 
         }, {

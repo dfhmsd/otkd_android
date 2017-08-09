@@ -11,7 +11,9 @@ import eu.nanooq.otkd.models.UI.CompleteStandingItem
 import eu.nanooq.otkd.models.UI.ItemType
 import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import io.reactivex.BackpressureStrategy
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.util.*
 
@@ -40,11 +42,15 @@ class ResultCompleteStandingViewModel : BaseViewModel<IResultCompleteStandingVie
         user?.run { loadCompleteResults(user) }
     }
 
+    override fun onStop() {
+        Timber.d("onDestroy()")
+        super.onStop()
+        mDisposable?.dispose()
+    }
+
     override fun onDestroy() {
         Timber.d("onDestroy()")
-
         super.onDestroy()
-        mDisposable?.dispose()
     }
 
     private fun loadCompleteResults(user: User) {
@@ -75,6 +81,8 @@ class ResultCompleteStandingViewModel : BaseViewModel<IResultCompleteStandingVie
                     completeStandingsItems.sortBy { it.mStanding }
                     completeStandingsItems
                 }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe {
                     val header = CompleteStandingHeader()
                     val itemsWithHeader = ArrayList<ItemType>()

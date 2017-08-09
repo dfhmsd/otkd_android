@@ -26,7 +26,6 @@ import eu.nanooq.otkd.activities.UserDetailActivity
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
 import eu.nanooq.otkd.models.UI.SectionItem
-import eu.nanooq.otkd.viewModels.IActivityToolbar
 import eu.nanooq.otkd.viewModels.sectionDetail.IRunnerSectionDetailView
 import eu.nanooq.otkd.viewModels.sectionDetail.RunnerSectionDetailVievModel
 import kotlinx.android.synthetic.main.fragment_runner_section_detail.*
@@ -221,8 +220,8 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
 
     override fun setupRunner(item: SectionItem) {
 
-        val toolbarActivity = activity as IActivityToolbar
-        toolbarActivity.onToolbarTitleChange(item.name.toUpperCase())
+//        val toolbarActivity = activity as IActivityToolbar
+//        toolbarActivity.onToolbarTitleChange(item.name.toUpperCase())
 
         vSectionsResultCount.text = "${item.length} km"
         vSectionStartedValue.text = "${item.high} m"
