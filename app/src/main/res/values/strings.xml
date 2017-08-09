@@ -50,7 +50,7 @@
     <string name="team_name">Názov tímu</string>
     <string name="time">Čas</string>
     <string name="standing_in_category">Por. v kat.</string>
-    <string name="complete_time">Celkový čas</string>
+    <string name="complete_time">Celk. čas</string>
     <string name="best_time_label">Najlepší čas</string>
     <string name="final_team_standing_label">Celkové poradie tímu</string>
     <string name="final_standing_in_category">Celkové poradie v kategorii</string>
@@ -61,4 +61,6 @@
     <string name="time_at_finish_label">Čas preběhnutia</string>
     <string name="team_time_label">Celkový čas tímu</string>
     <string name="category_label">Kategoria</string>
+    <string name="time_on_section">Čas na ús.</string>
+    <string name="profile_toolbar_title">PROFIL</string>
 </resources>

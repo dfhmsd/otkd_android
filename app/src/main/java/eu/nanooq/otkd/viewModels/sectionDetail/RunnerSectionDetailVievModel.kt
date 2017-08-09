@@ -29,7 +29,7 @@ class RunnerSectionDetailVievModel : BaseViewModel<IRunnerSectionDetailView>() {
     }
 
     fun openTrackDetail() {
-        view?.startTrackDetail(sectionItem.Id)
+        view?.startTrackDetail(sectionItem)
     }
 
     fun openUserDetail() {

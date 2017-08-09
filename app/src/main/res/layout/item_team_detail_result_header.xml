@@ -8,16 +8,16 @@
     >
 
     <TextView
-        android:id="@+id/vCategoryStandingLabel"
+        android:id="@+id/vStandingLabel"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="4dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="@string/standing_in_category"
+        android:text="@string/standing"
         android:textColor="@color/secondaryTextColor"
         android:textSize="14sp"
-        app:layout_widthPercent="18%"
+        app:layout_widthPercent="14%"
         />
 
     <TextView
@@ -25,36 +25,36 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/vCategoryStandingLabel"
+        android:layout_toEndOf="@+id/vStandingLabel"
         android:ellipsize="marquee"
         android:maxLines="2"
         android:text="@string/team_name"
         android:textColor="@color/secondaryTextColor"
         android:textSize="14sp"
-        app:layout_widthPercent="35%"
+        app:layout_widthPercent="40%"
         />
 
     <TextView
-        android:id="@+id/vCategoryNameLabel"
+        android:id="@+id/vTimeOnSectionLabel"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:layout_toEndOf="@+id/vTeamNameLabel"
-        android:text="@string/category_label"
+        android:text="@string/time_on_section"
         android:textColor="@color/secondaryTextColor"
         android:textSize="14sp"
         app:layout_widthPercent="20%"
         />
 
     <TextView
-        android:id="@+id/vTeamTimeLabel"
+        android:id="@+id/vCompleteTimeLabel"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="12dp"
         android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/vCategoryNameLabel"
-        android:gravity="center"
+        android:layout_toEndOf="@+id/vTimeOnSectionLabel"
+        android:gravity="start"
         android:text="@string/complete_time"
         android:textColor="@color/secondaryTextColor"
         android:textSize="14sp"

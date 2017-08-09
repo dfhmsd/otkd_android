@@ -5,10 +5,15 @@
 
         android:drawable="@color/colorPrimaryDark"/>
 
-    <item>
+    <item
+        android:bottom="40dp"
+        android:left="80dp"
+        android:right="80dp"
+        android:top="40dp"
+        >
         <bitmap
             android:gravity="center"
-            android:src="@drawable/logo_small"/>
+            android:src="@drawable/main"/>
     </item>
 
 </layer-list>

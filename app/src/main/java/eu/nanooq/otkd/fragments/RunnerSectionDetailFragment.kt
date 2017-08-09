@@ -26,6 +26,7 @@ import eu.nanooq.otkd.activities.UserDetailActivity
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
 import eu.nanooq.otkd.models.UI.SectionItem
+import eu.nanooq.otkd.viewModels.IActivityToolbar
 import eu.nanooq.otkd.viewModels.sectionDetail.IRunnerSectionDetailView
 import eu.nanooq.otkd.viewModels.sectionDetail.RunnerSectionDetailVievModel
 import kotlinx.android.synthetic.main.fragment_runner_section_detail.*
@@ -105,9 +106,10 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
         vUsersection.setOnClickListener { viewModel.openUserDetail() }
     }
 
-    override fun startTrackDetail(sectionId: Int) {
+    override fun startTrackDetail(sectionItem: SectionItem) {
         val trackDetailIntent = Intent(context, TrackDetailActivity::class.java)
-        trackDetailIntent.putExtra("sectionId", sectionId)
+        trackDetailIntent.putExtra("sectionId", sectionItem.Id)
+        trackDetailIntent.putExtra("sectionName", sectionItem.name)
         context.startActivity(trackDetailIntent)
     }
 
@@ -130,29 +132,32 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
 
         mMapView?.getMapAsync {
             Timber.d("getMapAsync()")
-            googleMap = it
+            if (context != null) {
+                googleMap = it
 
-            googleMap.uiSettings.setAllGesturesEnabled(true)
+                googleMap.uiSettings.setAllGesturesEnabled(true)
 
-            val geoLayer = GeoJsonLayer(googleMap, getSectionGeoData(sectionId), context)
-            val feature = geoLayer.features.first()
-            val geoPoints = feature.geometry.geometryObject as ArrayList<LatLng>
-            val firstPoint = geoPoints.first()
-            val lastPoint = geoPoints.last()
-
-
-
-            googleMap.addMarker(MarkerOptions()
-                    .position(firstPoint))
-            googleMap.addMarker(MarkerOptions()
-                    .position(lastPoint))
+                val geoLayer = GeoJsonLayer(googleMap, getSectionGeoData(sectionId), context)
+                val feature = geoLayer.features.first()
+                val geoPoints = feature.geometry.geometryObject as ArrayList<LatLng>
+                val firstPoint = geoPoints.first()
+                val lastPoint = geoPoints.last()
 
 
-            geoLayer.addLayerToMap()
-            val sectionBounds = getLayerBounds(geoLayer)
 
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(sectionBounds, 20))
+                googleMap.addMarker(MarkerOptions()
+                        .position(firstPoint))
+                googleMap.addMarker(MarkerOptions()
+                        .position(lastPoint))
 
+
+                geoLayer.addLayerToMap()
+                val sectionBounds = getLayerBounds(geoLayer)
+                googleMap.setOnMapLoadedCallback {
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(sectionBounds, 20))
+                }
+
+            }
         }
     }
 
@@ -215,13 +220,14 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
     }
 
     override fun setupMap(item: SectionItem) {
+        Timber.d("setupMap() $item")
         addSectionLineOverlay(item.Id)
     }
 
     override fun setupRunner(item: SectionItem) {
 
-//        val toolbarActivity = activity as IActivityToolbar
-//        toolbarActivity.onToolbarTitleChange(item.name.toUpperCase())
+        val toolbarActivity = activity as IActivityToolbar
+        toolbarActivity.onToolbarTitleChange(item.name.toUpperCase())
 
         vSectionsResultCount.text = "${item.length} km"
         vSectionStartedValue.text = "${item.high} m"
@@ -230,36 +236,15 @@ class RunnerSectionDetailFragment : ViewModelFragment<IRunnerSectionDetailView, 
 
         vSectionDescription.text = item.description
 
-        vSectionRunnerName.text = item.runnerName
-        vSectionRunnerPlace.text = "Poradie: ${item.runnerOrder}"
-        vSectionRunnerTime.text = "${item.runnerAverageTime} min/10 km"
+
 
         if (item.runnerName.isBlank()) {
-            Glide
-                    .with(context)
-                    .load(R.drawable.ic_placeholder_unassigned)
-                    .asBitmap()
-                    .centerCrop()
-                    .into(object : BitmapImageViewTarget(vSectionRunnerImage) {
-                        override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
-                            super.onLoadFailed(e, errorDrawable)
-                            Timber.e("onLoadFailed")
-                            val iconBmp = BitmapFactory.decodeResource(resources, R.drawable.ic_placeholder_unassigned)
-                            val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, iconBmp)
-                            circularBitmapDrawable.isCircular = true
-                            vSectionRunnerImage.setImageDrawable(circularBitmapDrawable)
-                        }
-
-                        override fun setResource(resource: Bitmap) {
-                            Timber.d("setResource")
-
-                            val iconBmp = BitmapFactory.decodeResource(resources, R.drawable.ic_placeholder_unassigned)
-                            val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, iconBmp)
-                            circularBitmapDrawable.isCircular = true
-                            vSectionRunnerImage.setImageDrawable(circularBitmapDrawable)
-                        }
-                    })
+            vUsersection.visibility = View.GONE
         } else {
+            vUsersection.visibility = View.VISIBLE
+            vSectionRunnerName.text = item.runnerName
+            vSectionRunnerPlace.text = "Poradie: ${item.runnerOrder}"
+            vSectionRunnerTime.text = "${item.runnerAverageTime} min/10 km"
 
             Glide
                     .with(context)

@@ -2,10 +2,12 @@ package eu.nanooq.otkd.viewModels.login
 
 import android.os.Bundle
 import com.androidhuman.rxfirebase2.database.data
+import com.google.firebase.database.GenericTypeIndicator
 import eu.nanooq.otkd.helpers.FirebaseHelper
 import eu.nanooq.otkd.models.API.UserCaptain
 import eu.nanooq.otkd.models.API.UserData
 import eu.nanooq.otkd.models.API.UserRunner
+import eu.nanooq.otkd.normalize
 import eu.nanooq.otkd.toBase64
 import eu.nanooq.otkd.viewModels.base.BaseViewModel
 import eu.nanooq.otkd.viewModels.splash.SplashViewModel
@@ -23,7 +25,7 @@ import java.util.concurrent.TimeUnit
 class LoginViewModel : BaseViewModel<ILoginView>() {
 
 
-    lateinit var mSub: Disposable
+    var mSub: Disposable? = null
 
     var mIsUserCaptain: Boolean = false
 
@@ -54,7 +56,16 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
 
     }
 
+    override fun onStop() {
+        Timber.d("onStop")
+        super.onStop()
+        mSub?.dispose()
+
+
+    }
+
     override fun onDestroy() {
+        Timber.d("onDestroy")
         super.onDestroy()
     }
 
@@ -82,7 +93,7 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
 
     private fun loginCaptain(captainName: String, captainPassword: String) {
 
-        mApiProvider
+        mSub = mApiProvider
                 .loginCaptain(captainName, captainPassword)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -106,14 +117,38 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
     private fun loginRunner(runnerFirstName: String, runnerSurname: String, runnerTeam: String) {
         Timber.d("loginRunner() $runnerFirstName , $runnerSurname, $runnerTeam ")
 
-        val login = "$runnerTeam $runnerFirstName $runnerSurname".toBase64()
+        val login = "$runnerTeam $runnerFirstName $runnerSurname"
         var user: UserRunner?
 
         mSub = mFirebaseHelper
                 .mFBDBReference
                 .child(FirebaseHelper.LOGIN_RUNNER)
-                .child(login)
+//                .child(login)
+
                 .data()
+                .map {
+                    Timber.d("loginRunner map() $it")
+                    val normalizedLogin = login.normalize()
+                    var runner: UserRunner? = null
+                    try {
+                        val typeList = object : GenericTypeIndicator<HashMap<String, UserRunner>>() {}
+                        val loginRunners = it.getValue(typeList)
+                        val key = loginRunners?.values?.firstOrNull {
+                            normalizedLogin == "${it.team_name} ${it.first_name} ${it.last_name}".normalize()
+                        }
+                        if (key != null) {
+                            runner = key
+                        }
+
+
+                    } catch (exc: Exception) {
+                        Timber.e("loginRunner map() ${exc.message}")
+//                        val typeList = object : GenericTypeIndicator<ArrayList<UserRunner>>() {}
+//                        val array = it.getValue(typeList) ?: ArrayList()
+                    }
+
+                    runner ?: error("User not found")
+                }
                 .timeout(10, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
@@ -128,7 +163,7 @@ class LoginViewModel : BaseViewModel<ILoginView>() {
                 .subscribe({
                     //onSuccess
                     Timber.d("onSuccess $it")
-                    user = it.getValue(UserRunner::class.java)
+                    user = it
 
                     user?.let {
                         saveUser(it)

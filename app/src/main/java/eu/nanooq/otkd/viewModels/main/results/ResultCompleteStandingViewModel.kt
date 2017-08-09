@@ -69,16 +69,16 @@ class ResultCompleteStandingViewModel : BaseViewModel<IResultCompleteStandingVie
 
                     finishedTeams.forEach {
                         val item = CompleteStandingItem().apply {
-                            mStanding = it.final_result ?: 0
                             mTeamName = it.team_name ?: ""
                             mTeamTime = it.final_team_time ?: ""
                             mCategoryStanding = it.final_result_in_category ?: 0
+                            mCategoryName = it.category ?: ""
                             mIsYourTeam = user.team_name == it.team_name
                         }
                         completeStandingsItems.add(item)
                     }
 
-                    completeStandingsItems.sortBy { it.mStanding }
+                    completeStandingsItems.sortBy { it.mCategoryStanding }
                     completeStandingsItems
                 }
                 .observeOn(AndroidSchedulers.mainThread())

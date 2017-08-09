@@ -10,5 +10,4 @@ import eu.nanooq.otkd.models.UI.ItemType
 interface IStandingsDetailView : IView {
     fun updateAdapter(newItems: ArrayList<ItemType>)
     fun updateTeamsStats(finishedCount: Int, runningCount: Int)
-    fun setToolbarTitle(title: String)
 }

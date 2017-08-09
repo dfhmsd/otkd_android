@@ -5,9 +5,9 @@ package eu.nanooq.otkd.models.UI
  * Created by rd on 04/08/2017.
  */
 data class CompleteStandingItem(
-        var mStanding: Int = 0,
         var mTeamName: String = "",
         var mTeamTime: String = "",
+        var mCategoryName: String = "",
         var mCategoryStanding: Int = 0,
         var mIsYourTeam: Boolean = false
 ) : ItemType {
@@ -30,9 +30,9 @@ class CompleteStandingItemTypes {
 }
 
 data class SectionStandingItem(
-        var mStanding: Int = 0,
         var mTeamName: String = "",
         var mTeamTime: Float = 0.0f,
+        var mStanding: Int = 0,
         var mCompleteTime: Float = 0.0f,
         var mIsYourTeam: Boolean = false
 ) : ItemType {

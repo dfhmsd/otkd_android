@@ -17,7 +17,7 @@
         android:layout_marginStart="20dp"
         android:textColor="@color/primaryTextColor"
         android:textSize="16sp"
-        app:layout_widthPercent="18%"
+        app:layout_widthPercent="14%"
         tools:text="1."
         />
 
@@ -30,12 +30,12 @@
         android:maxLines="2"
         android:textColor="@color/primaryTextColor"
         android:textSize="16sp"
-        app:layout_widthPercent="35%"
+        app:layout_widthPercent="40%"
         tools:text="IT Girls from Papua new Guinea"
         />
 
     <TextView
-        android:id="@+id/vCategory"
+        android:id="@+id/vTeamTime"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/vTeamName"
@@ -46,16 +46,16 @@
         />
 
     <TextView
-        android:id="@+id/vTeamTime"
+        android:id="@+id/vCompleteTime"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/vCategory"
+        android:layout_toEndOf="@+id/vTeamTime"
         android:gravity="center"
         android:textColor="@color/primaryTextColor"
         android:textSize="16sp"
         app:layout_widthPercent="20%"
-        tools:text="12:32:54"
+        tools:text="136."
         />
 
     <View

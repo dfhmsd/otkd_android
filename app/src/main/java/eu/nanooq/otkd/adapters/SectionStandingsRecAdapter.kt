@@ -10,8 +10,7 @@ import eu.nanooq.otkd.inflate
 import eu.nanooq.otkd.models.UI.CompleteStandingItemTypes
 import eu.nanooq.otkd.models.UI.ItemType
 import eu.nanooq.otkd.models.UI.SectionStandingItem
-import kotlinx.android.synthetic.main.item_complete_standing_header.view.*
-import kotlinx.android.synthetic.main.item_complete_standing_result.view.*
+import kotlinx.android.synthetic.main.item_team_detail_result.view.*
 
 /**
  *
@@ -65,13 +64,13 @@ class SectionStandingsRecAdapter(var mList: ArrayList<ItemType>) : RecyclerView.
 
 }
 
-class TeamSectionStandingVH(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_complete_standing_result)) {
+class TeamSectionStandingVH(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_team_detail_result)) {
     fun bind(item: SectionStandingItem) = itemView.apply {
         with(item) {
-            vStandingValue.text = "$mStanding."
+            vCategoryStanding.text = "$mStanding."
             vTeamName.text = mTeamName //
             vTeamTime.text = mTeamTime.formatTimeInMinutes()
-            vCategoryStanding.text = mCompleteTime.formatTimeInMinutes()
+            vCompleteTime.text = mCompleteTime.formatTimeInMinutes()
             if (mIsYourTeam) {
                 item_complete_standing_result.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
             }
@@ -79,8 +78,8 @@ class TeamSectionStandingVH(parent: ViewGroup) : RecyclerView.ViewHolder(parent.
     }
 }
 
-class TeamSectionStandingHeaderVH(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_complete_standing_header)) {
+class TeamSectionStandingHeaderVH(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_team_detail_result_header)) {
     fun bind() = itemView.apply {
-        vCategoryStandingLabel.text = context.getString(R.string.complete_time)
+        //        vCategoryStandingLabel.text = context.getString(R.string.complete_time)
     }
 }

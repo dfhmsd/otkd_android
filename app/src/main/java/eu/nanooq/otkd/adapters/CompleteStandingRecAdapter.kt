@@ -66,10 +66,10 @@ class CompleteStandingRecAdapter(var mList: ArrayList<ItemType>) : RecyclerView.
 class TeamStandingVH(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_complete_standing_result)) {
     fun bind(item: CompleteStandingItem) = itemView.apply {
         with(item) {
-            vStandingValue.text = "$mStanding."
             vTeamName.text = mTeamName
             vTeamTime.text = mTeamTime.resultTime()
-            vCategoryStanding.text = "$mCategoryStanding"
+            vCategoryStanding.text = "$mCategoryStanding."
+            vCategory.text = "$mCategoryName"
             if (mIsYourTeam) {
                 item_complete_standing_result.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
             }

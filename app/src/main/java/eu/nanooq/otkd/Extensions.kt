@@ -9,8 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import timber.log.Timber
 import java.nio.charset.Charset
+import java.text.Normalizer
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
+
 
 /**
  *
@@ -65,4 +68,12 @@ fun Float?.formatTimeInMinutes(): String {
     }
 }
 
+fun String?.normalize(): String {
+    if (this == null) return ""
+    val nfdNormalizedString = Normalizer.normalize(this, Normalizer.Form.NFD)
+    val pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+")
+    return pattern.matcher(nfdNormalizedString).replaceAll("").toLowerCase()
+
+//    return Normalizer.normalize(this , Normalizer.Form.NFD).replace("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+", "").toLowerCase()
+}
 

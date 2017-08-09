@@ -1,5 +1,6 @@
 package eu.nanooq.otkd.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.data.geojson.GeoJsonLayer
 import eu.nanooq.otkd.R
+import eu.nanooq.otkd.activities.TrackDetailActivity
 import eu.nanooq.otkd.adapters.SectionResultsRecAdapter
 import eu.nanooq.otkd.fragments.base.ViewModelFragment
 import eu.nanooq.otkd.inflate
@@ -45,12 +47,20 @@ class ResultsPerSectionFragment : ViewModelFragment<IResultPerSectionView, Resul
         val view = container?.inflate(R.layout.fragment_results_per_section)
 
         mAdapter = SectionResultsRecAdapter(ArrayList()) {
-            //            onDetailItemClick(it) todo handle click
+            onDetailItemClick(it)
         }
         return view
     }
 
+    private fun onDetailItemClick(sectionResult: SectionResult) {
+        val trackDetailIntent = Intent(context, TrackDetailActivity::class.java)
+        trackDetailIntent.putExtra("sectionId", sectionResult.mSectionId)
+        trackDetailIntent.putExtra("sectionName", sectionResult.mSectionName)
+        context.startActivity(trackDetailIntent)
+    }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        Timber.d("onViewCreated()")
         super.onViewCreated(view, savedInstanceState)
 
         mAdapter.hasStableIds()
@@ -60,9 +70,15 @@ class ResultsPerSectionFragment : ViewModelFragment<IResultPerSectionView, Resul
         vSectionsResultsRecView.hasFixedSize()
 
         mMapView?.onCreate(savedInstanceState)
-
+//
         mMapView?.onResume()
         initMap()
+
+    }
+
+    override fun onStart() {
+        Timber.d("onStart()")
+        super.onStart()
         showMapData()
 
     }
@@ -71,40 +87,43 @@ class ResultsPerSectionFragment : ViewModelFragment<IResultPerSectionView, Resul
 
         mMapView?.getMapAsync {
             Timber.d("getMapAsync()")
+            if (context != null) {
+                val googleMap = it
+                it.uiSettings.setAllGesturesEnabled(true)
 
-            val googleMap = it
-            it.uiSettings.setAllGesturesEnabled(true)
+                var geoLayer: GeoJsonLayer? = null
+                val markers = ArrayList<LatLng>()
+                for (i in 1..36) {
+                    geoLayer = GeoJsonLayer(it, getSectionGeoData(i), context.applicationContext)
+                    val feature = geoLayer.features.first()
+                    val geoPoints = feature.geometry.geometryObject as ArrayList<LatLng>
+                    val firstPoint = geoPoints.first()
+                    val lastPoint = geoPoints.last()
 
-            var geoLayer: GeoJsonLayer? = null
-            val markers = ArrayList<LatLng>()
-            for (i in 1..36) {
-                geoLayer = GeoJsonLayer(it, getSectionGeoData(i), context)
-                val feature = geoLayer.features.first()
-                val geoPoints = feature.geometry.geometryObject as ArrayList<LatLng>
-                val firstPoint = geoPoints.first()
-                val lastPoint = geoPoints.last()
+                    val firstMarker = MarkerOptions()
+                            .position(firstPoint)
+                    val lastMarker = MarkerOptions()
+                            .position(lastPoint)
+                    markers.add(firstMarker.position)
+                    markers.add(lastMarker.position)
+                    it.addMarker(firstMarker)
+                    it.addMarker(lastMarker)
+                    Timber.d("addLayer()")
 
-                val firstMarker = MarkerOptions()
-                        .position(firstPoint)
-                val lastMarker = MarkerOptions()
-                        .position(lastPoint)
-                markers.add(firstMarker.position)
-                markers.add(lastMarker.position)
-                it.addMarker(firstMarker)
-                it.addMarker(lastMarker)
+                    geoLayer.addLayerToMap()
+                }
 
-                geoLayer.addLayerToMap()
+                val builder = LatLngBounds.Builder()
+                for (marker in markers) {
+                    builder.include(marker)
+                }
+                val bounds = builder.build()
+
+                geoLayer?.let {
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20))
+                }
             }
 
-            val builder = LatLngBounds.Builder()
-            for (marker in markers) {
-                builder.include(marker)
-            }
-            val bounds = builder.build()
-
-            geoLayer?.let {
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20))
-            }
         }
     }
 
@@ -195,7 +214,7 @@ class ResultsPerSectionFragment : ViewModelFragment<IResultPerSectionView, Resul
     }
 
     override fun updateLenghtOfAllSections(lenghtOfAllSections: Float) {
-        vSectionResultLengthValue.text = "$lenghtOfAllSections"
+        vSectionResultLengthValue.text = String.format("%.1f", lenghtOfAllSections)
     }
 
     override fun updateSectionsCount(size: Int) {

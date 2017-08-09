@@ -65,8 +65,4 @@ class StandingsDetailFragment : ViewModelFragment<IStandingsDetailView, Standing
         vTeamsRunningCount.text = "Beží: $runningCount"
     }
 
-    override fun setToolbarTitle(title: String) {
-//        val activity = activity as IActivityToolbar
-//        activity.onToolbarTitleChange(title)
-    }
 }

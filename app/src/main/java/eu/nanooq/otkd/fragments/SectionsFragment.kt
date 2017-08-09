@@ -41,12 +41,9 @@ class SectionsFragment : ViewModelFragment<ISectionsView, SectionsViewModel>() ,
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mToolbarCallback = activity as IActivityToolbar
-
         vSectionsPager.adapter = SectionsPagerAdapter(childFragmentManager)
         vSectionTabs.setupWithViewPager(vSectionsPager)
 
-        mToolbarCallback.onToolbarTitleChange(getString(R.string.sections_toolbar_title))
 
     }
 }

@@ -16,13 +16,15 @@ class TrackDetailPagerAdapter(fm: FragmentManager, val sectionId: Int) : Fragmen
 
     val STANDIGS = "PORADIE"
     val RUNNER_ON_SECTION = "BEŽEC NA ÚSEKU"
-    val SECTION_DETAIL = "DETAIL ÚSEKU"
+    //    val SECTION_DETAIL = "DETAIL ÚSEKU"
     //    val tabs: MutableList<String> = mutableListOf(FOR_RUNNERS, FOR_CARS)
-    val tabs: MutableList<String> = mutableListOf(SECTION_DETAIL, RUNNER_ON_SECTION, STANDIGS)
+    val tabs: MutableList<String> = mutableListOf(
+            //        SECTION_DETAIL,
+            RUNNER_ON_SECTION, STANDIGS)
 
     override fun getItem(position: Int): Fragment {
         return when (tabs[position]) {
-            SECTION_DETAIL -> SectionDetailFragment.newInstance(sectionId)
+//            SECTION_DETAIL -> SectionDetailFragment.newInstance(sectionId)
             RUNNER_ON_SECTION -> RunnerOnSectionDetailFragment.newInstance(sectionId)
             STANDIGS -> StandingsDetailFragment.newInstance(sectionId)
             else -> SectionDetailFragment.newInstance(sectionId)

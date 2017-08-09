@@ -1,15 +1,19 @@
 package eu.nanooq.otkd.adapters
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.BitmapImageViewTarget
 import eu.nanooq.otkd.R
 import eu.nanooq.otkd.inflate
 import eu.nanooq.otkd.models.UI.SectionItem
 import kotlinx.android.synthetic.main.item_section.view.*
+import timber.log.Timber
 
 
 /**
@@ -59,50 +63,47 @@ class SectionsRecAdapter(private var mList: ArrayList<SectionItem>, context: Con
 //            vSectionCrossFall.text = "Previšenie (cca) $high - $down"
                 vSectionDifficulty.text = "Obtiažnosť: $difficulty"
                 vSectionRunnerName.text = runnerName
-//                if (runnerName.isBlank()) {
-//                    Glide
-//                            .with(context)
-//                            .load(R.drawable.ic_placeholder_unassigned)
-//                            .asBitmap()
-//                            .centerCrop()
-//                            .into(object : BitmapImageViewTarget(vSectionRunnerImage) {
-//                                override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
-//                                    super.onLoadFailed(e, errorDrawable)
-//                                    Timber.e("onLoadFailed")
-//
-//                                    vSectionRunnerImage.setImageDrawable(placeholder)
-//                                }
-//
-//                                override fun setResource(resource: Bitmap) {
-//                                    Timber.d("setResource")
-//                                    vSectionRunnerImage.setImageDrawable(placeholder)
-//                                }
-//                            })
-//                } else {
-//                    Glide
-//                            .with(context)
-//                            .load(runnerImgUrl)
-//                            .asBitmap()
-//                            .centerCrop()
-//                            .into(object : BitmapImageViewTarget(vSectionRunnerImage) {
-//                                override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
-//                                    super.onLoadFailed(e, errorDrawable)
-//                                    Timber.e("onLoadFailed")
-//
-//                                    vSectionRunnerImage.setImageDrawable(defaultUserDrawable)
-//                                }
-//
-//                                override fun setResource(resource: Bitmap) {
-//                                    Timber.d("setResource")
-//                                    val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, resource)
-//                                    circularBitmapDrawable.isCircular = true
-//                                    vSectionRunnerImage.setImageDrawable(circularBitmapDrawable)
-//                                }
-//                            })
-//                }
+                if (runnerName.isBlank()) {
+                    Glide
+                            .with(context)
+                            .load(R.drawable.ic_placeholder_unassigned)
+                            .asBitmap()
+                            .centerCrop()
+                            .into(object : BitmapImageViewTarget(vSectionRunnerImage) {
+                                override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
+                                    super.onLoadFailed(e, errorDrawable)
+                                    Timber.e("onLoadFailed")
 
+                                    vSectionRunnerImage.setImageDrawable(placeholder)
+                                }
 
+                                override fun setResource(resource: Bitmap) {
+                                    Timber.d("setResource")
+                                    vSectionRunnerImage.setImageDrawable(placeholder)
+                                }
+                            })
+                } else {
+                    Glide
+                            .with(context)
+                            .load(runnerImgUrl)
+                            .asBitmap()
+                            .centerCrop()
+                            .into(object : BitmapImageViewTarget(vSectionRunnerImage) {
+                                override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
+                                    super.onLoadFailed(e, errorDrawable)
+                                    Timber.e("onLoadFailed")
 
+                                    vSectionRunnerImage.setImageDrawable(defaultUserDrawable)
+                                }
+
+                                override fun setResource(resource: Bitmap) {
+                                    Timber.d("setResource")
+                                    val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.resources, resource)
+                                    circularBitmapDrawable.isCircular = true
+                                    vSectionRunnerImage.setImageDrawable(circularBitmapDrawable)
+                                }
+                            })
+                }
 
                 itemView.setOnClickListener { listener(this) }
 

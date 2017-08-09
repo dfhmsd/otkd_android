@@ -40,7 +40,12 @@ class SectionResultVH(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflat
     fun bind(item: SectionResult, listener: (SectionResult) -> Unit) = itemView.apply {
         with(item) {
             vSectionName.text = mSectionName.toUpperCase()
-            vSectionTeams.text = "$mSectionTeamCount tímy"
+            vSectionTeams.text = when (mSectionTeamCount) {
+                0 -> "$mSectionTeamCount tímov"
+                1 -> "$mSectionTeamCount tím"
+                in 2..4 -> "$mSectionTeamCount tímy"
+                else -> "$mSectionTeamCount tímov"
+            }
             vSectionNumberImage.text = mSectionId.toString()
             if (mSectionCompletedByYourTeam) {
                 vSectionNumberImage.background = ContextCompat.getDrawable(context, R.drawable.result_circle_team)
@@ -49,6 +54,7 @@ class SectionResultVH(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflat
 
             }
 
+            setOnClickListener { listener(this) }
         }
     }
 }

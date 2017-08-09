@@ -79,11 +79,8 @@ class StandingDetailViewModel : BaseViewModel<IStandingsDetailView>() {
                 resultItems.add(sectionStandingItem)
             }
 
-
-            //TODO
-            val teamsWhichAreStillRunningThisSection = it.filter { it.sections?.firstOrNull { it.section_id == sectionId && !it.time_when_run.isNullOrBlank() } != null }.size
+            val teamsWhichAreStillRunningThisSection = it.size
             view?.updateTeamsStats(teams.size, teamsWhichAreStillRunningThisSection - teams.size)
-            view?.setToolbarTitle(sectionName)
             resultItems.sortBy { it.mStanding }
             resultItems
         }

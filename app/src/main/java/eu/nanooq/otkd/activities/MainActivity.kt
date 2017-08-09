@@ -12,7 +12,6 @@ import eu.nanooq.otkd.fragments.ChatFragment
 import eu.nanooq.otkd.fragments.ResultsFragment
 import eu.nanooq.otkd.fragments.SectionsFragment
 import eu.nanooq.otkd.fragments.UserProfileFragment
-import eu.nanooq.otkd.viewModels.IActivityToolbar
 import eu.nanooq.otkd.viewModels.main.IMainView
 import eu.nanooq.otkd.viewModels.main.MainViewModel
 import kotlinx.android.synthetic.main.main_activity.*
@@ -22,7 +21,7 @@ import timber.log.Timber
  *
  * Created by rd on 28/07/2017.
  */
-class MainActivity : ViewModelActivity<IMainView, MainViewModel>(), IMainView, IActivityToolbar {
+class MainActivity : ViewModelActivity<IMainView, MainViewModel>(), IMainView {
 
     companion object {
         val FRAGMENT_SECTIONS_TAG = "fragment_sections"
@@ -98,24 +97,28 @@ class MainActivity : ViewModelActivity<IMainView, MainViewModel>(), IMainView, I
 //                .replace(R.id.vMainContent, fragment)
 //                .commit()
         when (tag) {
-            FRAGMENT_SECTIONS_TAG -> supportFragmentManager.beginTransaction().replace(R.id.vMainContentPager, SectionsFragment.newInstance()).commit()
-            FRAGMENT_CHAT_TAG -> supportFragmentManager.beginTransaction().replace(R.id.vMainContentPager, ChatFragment.newInstance()).commit()
-            FRAGMENT_RESULTS_TAG -> supportFragmentManager.beginTransaction().replace(R.id.vMainContentPager, ResultsFragment.newInstance()).commit()
-            FRAGMENT_PROFILE_TAG -> supportFragmentManager.beginTransaction().replace(R.id.vMainContentPager, UserProfileFragment.newInstance()).commit()
+            FRAGMENT_SECTIONS_TAG -> {
+                supportFragmentManager.beginTransaction().replace(R.id.vMainContentPager, SectionsFragment.newInstance()).commit()
+                onToolbarTitleChange(getString(R.string.sections_toolbar_title))
+            }
+            FRAGMENT_CHAT_TAG -> {
+                supportFragmentManager.beginTransaction().replace(R.id.vMainContentPager, ChatFragment.newInstance()).commit()
+                onToolbarTitleChange(getString(R.string.chat_toolbar_title))
+            }
+            FRAGMENT_RESULTS_TAG -> {
+                supportFragmentManager.beginTransaction().replace(R.id.vMainContentPager, ResultsFragment.newInstance()).commit()
+                onToolbarTitleChange(getString(R.string.results_toolbar_title))
+            }
+            FRAGMENT_PROFILE_TAG -> {
+                supportFragmentManager.beginTransaction().replace(R.id.vMainContentPager, UserProfileFragment.newInstance()).commit()
+                onToolbarTitleChange(getString(R.string.profile_toolbar_title))
+            }
 
         }
-
-//        onChangeMainPage(FRAGMENT_TAGS.indexOf(tag))
     }
 
-    private fun onChangeMainPage(pos: Int) {
-//        vMainContentPager.setCurrentItem(pos, false)
-    }
 
-    override fun onNewResult() {
-    }
-
-    override fun onToolbarTitleChange(title: String) {
+    fun onToolbarTitleChange(title: String) {
         supportActionBar?.title = title
     }
 }
