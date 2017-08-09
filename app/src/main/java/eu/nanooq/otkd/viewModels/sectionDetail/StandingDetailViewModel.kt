@@ -113,6 +113,6 @@ class StandingDetailViewModel : BaseViewModel<IStandingsDetailView>() {
                     }
                     array
                 }
-                .toFlowable(BackpressureStrategy.LATEST)
+                .toFlowable(BackpressureStrategy.BUFFER)
     }
 }

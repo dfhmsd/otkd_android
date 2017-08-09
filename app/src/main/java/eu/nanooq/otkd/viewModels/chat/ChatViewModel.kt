@@ -97,7 +97,7 @@ class ChatViewModel : BaseViewModel<IChatView>() {
                     }
                     array
                 }
-                .toFlowable(BackpressureStrategy.LATEST)
+                .toFlowable(BackpressureStrategy.BUFFER)
 
         val teamFlowable = mFirebaseHelper.mFBDBReference
                 .child(FirebaseHelper.TEAM_MEMBERS)
@@ -120,7 +120,7 @@ class ChatViewModel : BaseViewModel<IChatView>() {
                     }
                     array
                 }
-                .toFlowable(BackpressureStrategy.LATEST)
+                .toFlowable(BackpressureStrategy.BUFFER)
 
         teamFlowable
                 .observeOn(AndroidSchedulers.mainThread())

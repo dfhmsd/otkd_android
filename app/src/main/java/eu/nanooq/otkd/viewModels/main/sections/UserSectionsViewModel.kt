@@ -62,7 +62,7 @@ class UserSectionsViewModel : BaseViewModel<IUserSectionsView>() {
                     }
                     array
                 }
-                .toFlowable(BackpressureStrategy.LATEST)
+                .toFlowable(BackpressureStrategy.BUFFER)
         val teamObservable = mFirebaseHelper.mFBDBReference
                 .child(FirebaseHelper.TEAM_MEMBERS)
                 .child(user.team_name.toBase64())
@@ -82,7 +82,7 @@ class UserSectionsViewModel : BaseViewModel<IUserSectionsView>() {
                     }
                     array
                 }
-                .toFlowable(BackpressureStrategy.LATEST)
+                .toFlowable(BackpressureStrategy.BUFFER)
 
         val obsList = listOf(sectionsObservabel, teamObservable)
         obsList.toFlowable()

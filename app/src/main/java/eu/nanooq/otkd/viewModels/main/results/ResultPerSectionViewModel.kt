@@ -1,7 +1,7 @@
 package eu.nanooq.otkd.viewModels.main.results
 
 import android.os.Bundle
-import com.androidhuman.rxfirebase2.database.dataChanges
+import com.androidhuman.rxfirebase2.database.dataChangesOf
 import com.google.firebase.database.GenericTypeIndicator
 import eu.nanooq.otkd.helpers.FirebaseHelper
 import eu.nanooq.otkd.models.API.Section
@@ -55,10 +55,14 @@ class ResultPerSectionViewModel : BaseViewModel<IResultPerSectionView>() {
     }
 
     private fun loadResults(user: User) {
+        Timber.d("loadResults()")
+
         mDisposable = Flowable.combineLatest(sectionsFlowable,
                 resultsFlowable,
                 BiFunction<ArrayList<Section>, ArrayList<TeamResult>, ArrayList<SectionResult>> {
                     sections, results ->
+                    Timber.d("startParsing()")
+
                     val sectionsResults = ArrayList<SectionResult>()
 
                     sections.sortBy { it.id }
@@ -93,6 +97,8 @@ class ResultPerSectionViewModel : BaseViewModel<IResultPerSectionView>() {
                     view?.updateTeamsStartedCount(teamsStartedCount)
                     view?.updateTeamsFinishedCount(teamsFinishedCount)
                     sectionsResults.sortBy { it.mSectionId }
+                    Timber.d("parsing finished")
+
                     sectionsResults
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -106,35 +112,41 @@ class ResultPerSectionViewModel : BaseViewModel<IResultPerSectionView>() {
 
     }
 
+    val typeListSections = object : GenericTypeIndicator<HashMap<String, Section>>() {}
+
+
     private val sectionsFlowable by lazy {
         mFirebaseHelper.mFBDBReference
                 .child(FirebaseHelper.SECTIONS)
-                .dataChanges()
+                .dataChangesOf(typeListSections)
                 .map {
-                    val typeList = object : GenericTypeIndicator<HashMap<String, Section>>() {}
-                    val sections = it.getValue(typeList)
+                    Timber.d("resultsFlowable map()")
+
+                    val sections = it.get()
                     val array = ArrayList<Section>()
                     sections?.forEach {
                         array.add(it.value)
                     }
                     array
                 }
-                .toFlowable(BackpressureStrategy.LATEST)
+                .toFlowable(BackpressureStrategy.BUFFER)
     }
+
+    val typeListTeamResult = object : GenericTypeIndicator<HashMap<String, TeamResult>>() {}
 
     private val resultsFlowable by lazy {
         mFirebaseHelper.mFBDBReference
                 .child(FirebaseHelper.RESULTS)
-                .dataChanges()
+                .dataChangesOf(typeListTeamResult)
                 .map {
-                    val typeList = object : GenericTypeIndicator<HashMap<String, TeamResult>>() {}
-                    val results = it.getValue(typeList)
+                    Timber.d("resultsFlowable map()")
+                    val results = it.get()
                     val array = ArrayList<TeamResult>()
                     results?.forEach {
                         array.add(it.value)
                     }
                     array
                 }
-                .toFlowable(BackpressureStrategy.LATEST)
+                .toFlowable(BackpressureStrategy.BUFFER)
     }
 }

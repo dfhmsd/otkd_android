@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Logger
 import eu.nanooq.otkd.App
 import eu.nanooq.otkd.di.IDependency
 import javax.inject.Inject
@@ -37,8 +38,10 @@ class FirebaseHelper @Inject constructor(private var mContext: Context) : IDepen
 
         val fbDB = FirebaseDatabase.getInstance()
         fbDB.setPersistenceEnabled(true)
+        fbDB.setLogLevel(Logger.Level.DEBUG)
         mFBDBReference = fbDB
                 .reference
+        mFBDBReference.keepSynced(true)
 
     }
 

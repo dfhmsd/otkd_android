@@ -99,7 +99,7 @@ class UserDetailViewModel : BaseViewModel<IUserDetailView>() {
                     }
                     array
                 }
-                .toFlowable(BackpressureStrategy.LATEST)
+                .toFlowable(BackpressureStrategy.BUFFER)
     }
 
 
@@ -116,6 +116,6 @@ class UserDetailViewModel : BaseViewModel<IUserDetailView>() {
                     }
                     array
                 }
-                .toFlowable(BackpressureStrategy.LATEST)
+                .toFlowable(BackpressureStrategy.BUFFER)
     }
 }

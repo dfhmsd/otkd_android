@@ -15,7 +15,6 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
-import io.reactivex.rxkotlin.toFlowable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
@@ -27,6 +26,8 @@ import timber.log.Timber
 class AllSectionsViewModel : BaseViewModel<IAllSectionsView>() {
 
     var mDisposable: Disposable? = null
+
+    var user: User? = null
 
     private lateinit var sectionsFlowable: Flowable<ArrayList<Section>>
 
@@ -40,7 +41,8 @@ class AllSectionsViewModel : BaseViewModel<IAllSectionsView>() {
     override fun onStart() {
         Timber.d("onStart()")
         super.onStart()
-        val user = mPreferencesHelper.getUser()
+        user = mPreferencesHelper.getUser()
+
 
         user?.let { loadUserData(user) }
 
@@ -65,51 +67,8 @@ class AllSectionsViewModel : BaseViewModel<IAllSectionsView>() {
 
     }
 
-    private fun loadUserData(user: User) {
-        Timber.i("loadUserData() ${user.team_name}")
-
-        val sectionsObservabel = mFirebaseHelper.mFBDBReference
-                .child(FirebaseHelper.SECTIONS)
-                .dataChanges()
-                .map {
-                    val typeList = object : GenericTypeIndicator<HashMap<String, Section>>() {}
-                    val sections = it.getValue(typeList)
-                    val array = ArrayList<Section>()
-                    sections?.forEach {
-                        array.add(it.value)
-                    }
-                    array
-                }
-                .toFlowable(BackpressureStrategy.LATEST)
-
-        val teamObservable = mFirebaseHelper.mFBDBReference
-                .child(FirebaseHelper.TEAM_MEMBERS)
-                .child(user.team_name.toBase64())
-                .child(FirebaseHelper.MEMBERS)
-                .dataChanges()
-                .map {
-                    Timber.d("teamObservable map() $it")
-                    var array = ArrayList<Member>()
-                    try {
-                        val typeList = object : GenericTypeIndicator<HashMap<String, Member>>() {}
-                        val team = it.getValue(typeList)
-                        team?.forEach {
-                            array.add(it.value)
-                        }
-
-                    } catch (exc: Exception) {
-                        val typeList = object : GenericTypeIndicator<ArrayList<Member>>() {}
-                        array = it.getValue(typeList) ?: ArrayList()
-
-                    }
-
-                    array
-                }
-                .toFlowable(BackpressureStrategy.LATEST)
-
-        val obsList = listOf(sectionsObservabel, teamObservable)
-        obsList.toFlowable()
-
+    private fun loadUserData(user: User?) {
+        Timber.i("loadUserData() ${user?.team_name}")
 
         mDisposable = Flowable.combineLatest(sectionsObservabel, teamObservable, BiFunction<ArrayList<Section>, ArrayList<Member>, ArrayList<SectionItem>> { sections, members ->
             val sectionItems = ArrayList<SectionItem>()
@@ -151,4 +110,48 @@ class AllSectionsViewModel : BaseViewModel<IAllSectionsView>() {
 
 
     }
+
+    private val teamObservable by lazy {
+        mFirebaseHelper.mFBDBReference
+                .child(FirebaseHelper.TEAM_MEMBERS)
+                .child(user?.team_name.toBase64())
+                .child(FirebaseHelper.MEMBERS)
+                .dataChanges()
+                .map {
+                    Timber.d("teamObservable map() $it")
+                    var array = ArrayList<Member>()
+                    try {
+                        val typeList = object : GenericTypeIndicator<HashMap<String, Member>>() {}
+                        val team = it.getValue(typeList)
+                        team?.forEach {
+                            array.add(it.value)
+                        }
+
+                    } catch (exc: Exception) {
+                        val typeList = object : GenericTypeIndicator<ArrayList<Member>>() {}
+                        array = it.getValue(typeList) ?: ArrayList()
+
+                    }
+                    array
+                }
+                .toFlowable(BackpressureStrategy.ERROR)
+    }
+
+    private val sectionsObservabel by lazy {
+        mFirebaseHelper.mFBDBReference
+                .child(FirebaseHelper.SECTIONS)
+                .dataChanges()
+                .map {
+                    val typeList = object : GenericTypeIndicator<HashMap<String, Section>>() {}
+                    val sections = it.getValue(typeList)
+                    val array = ArrayList<Section>()
+                    sections?.forEach {
+                        array.add(it.value)
+                    }
+                    array
+                }
+                .toFlowable(BackpressureStrategy.ERROR)
+    }
+
+
 }

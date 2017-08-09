@@ -105,6 +105,6 @@ class ResultCompleteStandingViewModel : BaseViewModel<IResultCompleteStandingVie
                     }
                     array
                 }
-                .toFlowable(BackpressureStrategy.LATEST)
+                .toFlowable(BackpressureStrategy.BUFFER)
     }
 }
